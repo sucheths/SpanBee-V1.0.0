@@ -1,60 +1,4 @@
-<!-- header start -->
-<!-- ================ -->
-<header>
-	<nav class="navbar navbar-inverse navbar-fixed-top  well well-sm">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand"> <img alt="Brand" src="images/logo.png">
-				</a> <a class="navbar-brand"> Span-Bee </a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="true">Notification&nbsp;<span class="badge">42</span>
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a>Action</a></li>
-							<li><a>Another action</a></li>
-							<li><a>Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a>Separated link</a></li>
-							<li><a>One more separated link</a></li>
-						</ul>
-					</li>
-					<li><a ng-click="welcome()"><i class="fa fa-share-alt"></i>&nbsp;&nbsp;Share</a></li>
-					<li><a ng-click="welcome()"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a></li>
-					<li class="dropdown">
-						<a class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="true"><i class="fa fa-user"></i>&nbsp;&nbsp;Nagarjun<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a ng-click="userDetails()">Profile</a></li>
-						</ul>
-					</li>
-					<li><a ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;logout</a></li>
-				</ul>
-				<div class="navbar-form navbar-right">
-					<div class="form-group has-feedback">
-						<input type="text" class="form-control" id="search"
-							ng-model="search" name="search" placeholder="Search Name/Location">
-						<i class="fa fa-search form-control-feedback"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
-</header>
-<!-- header end -->
+<div ng-include="'pages/header.htm'"></div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar well">
@@ -170,11 +114,4 @@
 	</div>
 </div>
 
-<footer class="footer">
-	<div class="container">
-		<p class="text-muted">
-			<i class="fa fa-copyright"></i> Span-Bee 2015 . <a href="#">Privacy</a>
-			. <a href="#">Terms</a>
-		</p>
-	</div>
-</footer>
+<div ng-include="'pages/footer.htm'"></div>
