@@ -20,7 +20,5 @@ public class RegisterationParameters{
   public String marital_status;
   
   
-
-  
 }
 

@@ -1,8 +1,5 @@
 package com.spanbee.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,17 +7,15 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
-import com.spanbee.service.CommonService;
 import com.spanbee.utils.Utils;
-
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
 /**
  * @author sucheth.s
  * 
@@ -30,7 +25,6 @@ public class RegistrationController {
 
 
 
-  private CommonService commonService;
   private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
 
   @POST
@@ -42,9 +36,8 @@ public class RegistrationController {
     String session_id;
     String request_origin;
     JsonNode data;
-
     if (LOGGER.isInfoEnabled()) {
-      LOGGER.info("Entered into register method with reuest string :" + jsonReqest);
+      LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
     try {
       if (jsonReqest != null) {
@@ -93,12 +86,6 @@ public class RegistrationController {
     return parameters;
 }
 
-  public CommonService getCommonService() {
-    return commonService;
-  }
-
-  public void setCommonService(CommonService commonService) {
-    this.commonService = commonService;
-  }
+  
 
 }
