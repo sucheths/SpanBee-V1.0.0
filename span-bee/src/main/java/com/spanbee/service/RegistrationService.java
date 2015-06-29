@@ -7,9 +7,9 @@ import com.spanbee.requestparameters.RegisterationParameters;
  *
  */
 
-public interface CommonService {
+public interface RegistrationService {
   
-  boolean registerCustomer(RegisterationParameters customerParams);
+  public void register(RegisterationParameters registrationParams);
 
 }
 
