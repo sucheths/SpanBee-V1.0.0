@@ -1,0 +1,147 @@
+<!-- header start -->
+<!-- ================ -->
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top  well well-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"> <img alt="Brand" src="images/logo.png">
+				</a> <a class="navbar-brand"> Span-Bee </a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="true">Notification&nbsp;<span class="badge">42</span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a>Action</a></li>
+							<li><a>Another action</a></li>
+							<li><a>Something else here</a></li>
+						</ul>
+					</li>
+					<li><a ng-click="share()"><i class="fa fa-share-alt"></i>&nbsp;&nbsp;Share</a></li>
+					<li><a ng-click="welcome()"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="true"><i class="fa fa-user"></i>&nbsp;&nbsp;Nagarjun<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a ng-click="userDetails()">Profile</a></li>
+						</ul>
+					</li>
+					<li><a ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;logout</a></li>
+				</ul>
+				<div class="navbar-form navbar-right">
+					<div class="form-group has-feedback">
+						<input type="text" class="form-control" id="search"
+							ng-model="search" name="search" placeholder="Search Name/Location">
+						<i class="fa fa-search form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>
+<!-- header end -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar well">
+			<br />
+			<ul class="nav nav-sidebar">
+				<li class="active"><a>Overview</a></li>
+				<li><a >Personal Details</a></li>
+				<li><a>Analytics</a></li>
+				<li><a>Export</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item</a></li>
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+				<li><a href="">More navigation</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+			</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="jumbotron">
+				<div class="container marketing">
+					<blockquote>
+					    <p>We found <strong>30</strong> best matches to your profile</p>
+					</blockquote>
+
+					<!-- Three columns of text below the carousel -->
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="panel panel-default">
+							    <div class="panel-body">
+									<img data-src="holder.js/200x200/auto/sky" class="img-circle" alt="200x200" 
+										src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" 
+										data-holder-rendered="true">
+								</div>
+								<div class="panel-footer" ng-click="profileView()">
+							    	<a class="btn btn-default" role="button">
+							    	View details &nbsp;&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>
+							    	</a>
+								</div>
+							    
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-default">
+							    <div class="panel-body">
+								    <img data-src="holder.js/200x200/auto/sky" class="img-circle" alt="200x200" 
+										src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" 
+										data-holder-rendered="true">
+								</div>
+								<div class="panel-footer" ng-click="profileView()">
+							    	<a class="btn btn-default" role="button">
+							    	View details  &nbsp;&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>
+							    	</a>
+								</div>
+							    
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-default">
+							    <div class="panel-body">
+								   <img data-src="holder.js/200x200/auto/sky" class="img-circle" alt="200x200" 
+										src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" 
+										data-holder-rendered="true">
+								</div>
+								<div class="panel-footer" ng-click="profileView()">
+							    	<a class="btn btn-default" role="button">
+							    	View details  &nbsp;&nbsp;<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>
+							    	</a>
+								</div>
+							    
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="container">
+		<p class="text-muted">
+			<i class="fa fa-copyright"></i> Span-Bee 2015 . <a href="#">Privacy</a>
+			. <a href="#">Terms</a>
+		</p>
+	</div>
+</footer>

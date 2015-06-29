@@ -1,0 +1,310 @@
+<!-- header start -->
+<!-- ================ -->
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top  well well-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"> <img alt="Brand" src="images/logo.png">
+				</a> <a class="navbar-brand"> Span-Bee </a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="true">Notification&nbsp;<span class="badge">42</span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a>Action</a></li>
+							<li><a>Another action</a></li>
+							<li><a>Something else here</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Nav header</li>
+							<li><a>Separated link</a></li>
+							<li><a>One more separated link</a></li>
+						</ul>
+					</li>
+					<li><a ng-click="welcome()"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a></li>
+					<li><a ng-click="userDetails()"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
+					<li><a ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;logout</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<div class="form-group has-feedback">
+						<input type="text" class="form-control" id="search"
+							ng-model="search" required name="search" placeholder="Search">
+						<i class="fa fa-search form-control-feedback"></i>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
+</header>
+<!-- header end -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar well">
+			<br />
+			<ul class="nav nav-sidebar">
+				<li class="active"><a>Overview <span class="sr-only">(current)</span></a></li>
+				<li><a>Reports</a></li>
+				<li><a>Analytics</a></li>
+				<li><a>Export</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item</a></li>
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+				<li><a href="">More navigation</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+			</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2 main">
+			<div class="jumbotron">
+				<div class="container marketing">
+					<h2>Personal Details</h2>
+					<form name="signIn" class="form-horizontal" ng-submit="signInForm(signInFormData)">
+						<br/>
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="row">
+										<div class="form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="text" class="form-control" id="first_name" ng-model="registerFormData.first_name" required name="first_name"
+													placeholder="First Name">
+											</div>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" id="last_name" ng-model="registerFormData.last_name" required name="last_name"
+													placeholder="Last Name">
+												<i class="fa fa-user form-control-feedback"></i>
+											</div>
+										</div>
+											
+										<div class="form-control-wrapper form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="date" class="form-control empty" id="birth_date" ng-model="registerFormData.birth_date" required name="birth_date"
+													placeholder="Date Of Birth">
+												<i class="fa fa-calendar form-control-feedback"></i>
+												<span class="help-block">Enter Date of Birth</span>
+											</div>
+											
+											<div class="col-lg-6">
+												<input type="text" maxlength="10" class="form-control" id="mobile" ng-model="registerFormData.mobile" required name="mobile" 
+													placeholder="mobile">
+												<i class="fa fa-mobile form-control-feedback"></i>
+											</div>
+										</div>
+										
+										<div class="form-group has-feedback">
+											<div class="col-lg-6">
+												<select class="form-control" id="gender" ng-model="registerFormData.gender" required name="gender" placeholder="Gender" ng-init="registerFormData.gender='M'">
+							                        <option value="M" selected="selected">Male</option>
+							                        <option value="F">Female</option>
+							                    </select>
+							                    <span class="help-block">Gender</span>
+											</div>
+											<div class="col-lg-6">
+												<select class="form-control" id="marital_status" ng-model="registerFormData.marital_status" required name="marital_status" placeholder="Marital Status" ng-init="registerFormData.marital_status='0'">
+							                        <option value="0" selected="selected">Single</option>
+							                        <option value="1">Married</option>
+							                        <option value="2">Divorced</option>
+							                    </select>
+							                    <span class="help-block">Marital Status</span>
+											</div>
+										</div>
+										
+										<div class="form-group has-feedback">
+											<div class="col-lg-4">
+												<input type="text" class="form-control" id="first_name" ng-model="registerFormData.first_name" required name="first_name"
+													placeholder="Religion">
+											</div>
+											<div class="col-lg-4">
+												<input type="text" class="form-control" id="last_name" ng-model="registerFormData.last_name" required name="last_name"
+													placeholder="Cast">
+											</div>
+											<div class="col-lg-4">
+												<input type="text" class="form-control" id="last_name" ng-model="registerFormData.last_name" required name="last_name"
+													placeholder="Sub-Cast">
+											</div>
+										</div>
+										
+										<div class="form-group has-feedback">
+											<div class="col-lg-6">
+												<textarea class="form-control" rows="3" id="textArea" placeholder="About your self"></textarea>
+												<i class="fa fa-pencil form-control-feedback"></i>
+											</div>
+											<div class="col-lg-6">
+												<textarea class="form-control" rows="3" id="textArea" placeholder="Hobbies"></textarea>
+												<i class="fa fa-pencil form-control-feedback"></i>
+											</div>
+										</div>
+										<div class="form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="email" disabled class="form-control" id="inputemail_id" ng-model="signInFormData.email_id" required name="email_id" ng-pattern="/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/"
+													placeholder="Email" >
+												<i class="fa fa-envelope form-control-feedback"></i>
+											</div>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" id="password" ng-model="signInFormData.password" required name="password"
+													placeholder="Location">
+												<i class="fa fa-location-arrow form-control-feedback"></i>
+											</div>
+										</div>
+										<div class="form-group has-feedback" ng-show="hidePassword">
+											<div class="col-lg-6">
+												<input type="password" class="form-control" id="password" ng-model="signInFormData.password" required name="password"
+													placeholder="Password">
+												<i class="fa fa-key form-control-feedback"></i>
+											</div>
+											<div class="col-lg-6">
+												<input type="password" id="confirmPwd" name="confirmPwd" ng-model="registerFormData.confirmPassword"  match-content="pwd" class="form-control"
+													placeholder="Confirm Password" required/>
+												<span class="text-danger" ng-show="register.confirmPwd.$error.matchContent">Passwords don't match.</span>
+											</div>
+										</div>
+										<div class="form-group has-feedback" ng-hide="hidePassword">
+											<div class="col-lg-3 text-vm"><a ng-click="hidePassword=true">Change Password ?</a></div>
+										</div>
+										<div class="form-group has-feedback">
+											<div class="col-lg-6 ">
+												<button class="btn btn-info" ng-click="forgotPassword(signInFormData)">Save</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+						        	<div class="panel panel-info form-control-wrapper fileinput">
+									    <div class="panel-body">
+										    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+									    	<input type="text" readonly="" class="form-control empty display-none">
+									    	<input type="file" id="inputFile" multiple="" class="display-none">
+									    	<span class="material-input"></span>
+										</div>
+									    <div class="panel-footer text-center">
+									    	Profile Picture
+										</div>
+									</div>
+									<div class="panel panel-info form-control-wrapper fileinput">
+									    <div class="panel-body">
+										    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+									    	<input type="text" readonly="" class="form-control empty display-none">
+									    	<input type="file" id="inputFile" multiple="" class="display-none">
+									    	<span class="material-input"></span>
+										</div>
+									    <div class="panel-footer text-center">
+									    	Upload Horoscope
+										</div>
+									</div>
+									<div class="panel panel-info form-control-wrapper fileinput">
+									    <div class="panel-body">
+										    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+									    	<input type="text" readonly="" class="form-control empty display-none">
+									    	<input type="file" id="inputFile" multiple="" class="display-none">
+									    	<span class="material-input"></span>
+										</div>
+									    <div class="panel-footer text-center">
+									    	Upload any Government Id Proff
+										</div>
+									</div>
+					            </div>
+							</div>
+						</form>
+	
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-2 main">
+				<div class="jumbotron">
+					<div class="container marketing">
+						<h2>Professional Details</h2>
+						<form name="signIn" class="form-horizontal" ng-submit="signInForm(signInFormData)">
+							<br/>
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="row">
+										<div class="form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="text" class="form-control" id="first_name" ng-model="registerFormData.first_name" required name="first_name"
+													placeholder="Company Name">
+												<i class="fa fa-building form-control-feedback"></i>
+											</div>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" id="last_name" ng-model="registerFormData.last_name" required name="last_name"
+													placeholder="Work Location">
+												<i class="fa fa-location-arrow form-control-feedback"></i>
+											</div>
+										</div>
+											
+										<div class="form-control-wrapper form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="date" class="form-control empty" id="birth_date" ng-model="registerFormData.birth_date" required name="birth_date"
+													placeholder="Date Of Birth">
+												<i class="fa fa-calendar form-control-feedback"></i>
+												<span class="help-block">Date of Joining</span>
+											</div>
+											<div class="col-lg-6">
+												<input type="text" class="form-control empty" id="birth_date" ng-model="registerFormData.birth_date" required name="birth_date"
+													placeholder="Gross anual income in Lakhs">
+												<i class="fa fa-rupee form-control-feedback"></i>
+											</div>
+										</div>
+										
+										<div class="form-control-wrapper form-group has-feedback">
+											<div class="col-lg-6">
+												<input type="text" class="form-control empty" id="birth_date" ng-model="registerFormData.birth_date" required name="birth_date"
+													placeholder="Designation">
+												<i class="fa fa-briefcase form-control-feedback"></i>
+											</div>
+										</div>
+										
+										<div class="form-group has-feedback">
+											<div class="col-lg-6 ">
+												<button class="btn btn-info" ng-click="forgotPassword(signInFormData)">Save</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-1"></div>
+								<div class="col-lg-2">
+					        	
+					        	<div class="panel panel-info form-control-wrapper fileinput">
+								    <div class="panel-body">
+									    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+								    	<input type="text" readonly="" class="form-control empty display-none">
+								    	<input type="file" id="inputFile" multiple="" class="display-none">
+								    	<span class="material-input"></span>
+									</div>
+								    <div class="panel-footer text-center">
+									    	Company Id
+									</div>
+								</div>
+				            </div>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="container">
+		<p class="text-muted">
+			<i class="fa fa-copyright"></i> Span-Bee 2015 . <a href="#">Privacy</a>
+			. <a href="#">Terms</a>
+		</p>
+	</div>
+</footer>

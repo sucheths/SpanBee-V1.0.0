@@ -1,0 +1,180 @@
+<!-- header start -->
+<!-- ================ -->
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top  well well-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"> <img alt="Brand" src="images/logo.png">
+				</a> <a class="navbar-brand"> Span-Bee </a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="true">Notification&nbsp;<span class="badge">42</span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a>Action</a></li>
+							<li><a>Another action</a></li>
+							<li><a>Something else here</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Nav header</li>
+							<li><a>Separated link</a></li>
+							<li><a>One more separated link</a></li>
+						</ul>
+					</li>
+					<li><a ng-click="welcome()"><i class="fa fa-share-alt"></i>&nbsp;&nbsp;Share</a></li>
+					<li><a ng-click="welcome()"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="true"><i class="fa fa-user"></i>&nbsp;&nbsp;Nagarjun<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a ng-click="userDetails()">Profile</a></li>
+						</ul>
+					</li>
+					<li><a ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;logout</a></li>
+				</ul>
+				<div class="navbar-form navbar-right">
+					<div class="form-group has-feedback">
+						<input type="text" class="form-control" id="search"
+							ng-model="search" name="search" placeholder="Search Name/Location">
+						<i class="fa fa-search form-control-feedback"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>
+<!-- header end -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar well">
+			<br />
+			<ul class="nav nav-sidebar">
+				<li class="active"><a>Overview</a></li>
+				<li><a >Personal Details</a></li>
+				<li><a>Analytics</a></li>
+				<li><a>Export</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item</a></li>
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+				<li><a href="">More navigation</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+			</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="jumbotron">
+				<div class="container marketing">
+					<br/>
+					<div class="panel panel-info">
+					    <div class="panel-body">
+						     	
+							<div class="row">
+								<div class="col-lg-3">
+									<img class="img-responsive"
+										src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+										alt="Generic placeholder image" width="140" height="140">
+								</div>
+								<div class="col-lg-7"></div>
+								<div class="col-lg-2">
+									<a class="btn btn-default btn-raised btn-block"><i class="fa fa-send"></i>&nbsp;&nbsp;Send Request</a>
+									<button disabled type="button" class="btn btn-default btn-raised btn-block" data-container="body" data-toggle="popover" 
+									data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+										<i class="fa fa-photo"></i>&nbsp;&nbsp;View Photos
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="panel-heading">
+						    <div class="row">
+								<div class="col-lg-3">
+									<h3 class="panel-title">Nagarjun Sanji</h3>
+								</div>
+								<div class="col-lg-7"></div>
+								<div class="col-lg-2">
+								</div>
+							</div>
+						</div>
+					</div>
+							
+					<!-- Three columns of text below the carousel -->
+					<fieldset>
+						<legend>Personal Details</legend>
+							<div class="row">
+								<div class="col-lg-5">
+							        <div class="row form-group">
+							            <label class="col-lg-5 control-label">Name</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-5 help-block">Nagarjun Sanji</span>
+							        </div>
+							        <div class="row form-group">
+							            <label class="col-lg-5 control-label">Date of Birth</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-5 help-block">22/SEP/1988</span>
+							        </div>
+							        <div class="row form-group">
+							            <label class="col-lg-5 control-label">Location</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-5 help-block">Bangalore</span>
+							        </div>
+							        <div class="row form-group">
+							            <label class="col-lg-5 control-label">Religion</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-5 help-block">Hindu</span>
+							        </div>
+							        <div class="row form-group">
+							            <label class="col-lg-5 control-label">Religion</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-5 help-block">Hindu</span>
+							        </div>
+								</div>
+								<div class="col-lg-7">
+									<div class="row form-group">
+							            <label class="col-lg-3 control-label">About your self</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-8 help-block">
+							            	Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+							            </span>
+							        </div>
+							        <div class="row form-group">
+							            <label class="col-lg-3 control-label">Hobbies</label>
+							            <label class="col-lg-1 control-label">:</label>
+							            <span class="col-lg-8 help-block">
+							            	Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+							            </span>
+							        </div>
+								</div>
+							</div>
+					</fieldset>
+					<!-- /.row -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+	<div class="container">
+		<p class="text-muted">
+			<i class="fa fa-copyright"></i> Span-Bee 2015 . <a href="#">Privacy</a>
+			. <a href="#">Terms</a>
+		</p>
+	</div>
+</footer>
