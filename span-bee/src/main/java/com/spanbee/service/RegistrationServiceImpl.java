@@ -64,7 +64,7 @@ public class RegistrationServiceImpl implements RegistrationService{
           resp.setDescription("");
           responseString = Utils.getResponseString(resp);
           
-          EmailModel emailModel = new EmailModel();
+           EmailModel emailModel = new EmailModel();
           emailModel.setSubject("Check E-mail SPAN-BEE");
           emailModel.setFromAddress("admin@shopus365.com");
           emailModel.setHostName("mail.shopus365.com");
