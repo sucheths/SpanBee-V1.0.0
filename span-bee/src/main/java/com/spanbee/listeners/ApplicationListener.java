@@ -4,6 +4,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 
+
+import org.apache.log4j.Logger;
+
 import com.spanbee.constants.Constants;
 import com.spanbee.utils.PropertyReader;
 
