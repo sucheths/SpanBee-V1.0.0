@@ -8,7 +8,7 @@ package com.spanbee.model;
 public class EmailModel {
   
   
-  private String toaddess;
+   private String toaddess;
   private String fromAddress;
   private String hostName;
   private String port;
