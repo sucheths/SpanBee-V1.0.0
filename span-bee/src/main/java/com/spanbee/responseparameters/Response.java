@@ -9,7 +9,7 @@ public class Response {
 
   
     
-    private String status;
+     private String status;
     
     private String code;
     
