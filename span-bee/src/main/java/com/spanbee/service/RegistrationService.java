@@ -1,6 +1,7 @@
 package com.spanbee.service;
 
 import com.spanbee.requestparameters.RegisterationParameters;
+import com.spanbee.requestparameters.Request;
 
 /**
  * @author sucheth.s
@@ -9,7 +10,7 @@ import com.spanbee.requestparameters.RegisterationParameters;
 
 public interface RegistrationService {
   
-  public void register(RegisterationParameters registrationParams);
+  public boolean register(RegisterationParameters registrationParams,Request request);
 
 }
 

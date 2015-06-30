@@ -12,43 +12,24 @@
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
 
 	<bean id="springApplicationContext"
-		class="com.mscripts.patientPortal.listener.SpringApplicationContext" />
+		class="com.spanbee.listeners.SpringApplicationContext" />
 
-	<bean id="patientPortalService"
-		class="com.mscripts.patientPortal.service.PatientPortalServiceImpl">
-		<property name="patientPortalDaoImpl" ref="patientPortalDaoImpl" />
+	<bean id="registrationService"
+		class="com.spanbee.service.RegistrationServiceImpl">
+		<property name="registrationDaoImpl" ref="registrationDaoImpl" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager"
 		proxy-target-class="false" />
 
-	<bean id="dataSourceMeijerTest"
+
+	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/pdx_mscripts_v6_6_dev_1?autocommit=true"></property>
-		<property name="username" value="${connection.MeijerTest.username}"></property>
-		<property name="password" value="${connection.MeijerTest.password}"></property>
-	</bean>
-
-	<bean id="dataSourceWinn-DixieTest"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/pdx_mscripts_v6_6_dev_2?autocommit=true"></property>
-		<property name="username" value="${connection.Winn-DixieTest.username}"></property>
-		<property name="password" value="${connection.Winn-DixieTest.password}"></property>
-	</bean>
-
-	<bean id="dynamicDataSource"
-		class="com.mscripts.patientPortal.util.DynamicRoutingDatasource">
-		<property name="targetDataSources">
-			<map key-type="java.lang.String">
-				<entry key="Winn-DixieTest" value-ref="dataSourceWinn-DixieTest" />
-				<entry key="MeijerTest" value-ref="dataSourceMeijerTest" />
-			</map>
-		</property>
-		<property name="defaultTargetDataSource" ref="dataSource" />
+			value="jdbc:mysql://208.91.198.55:3306/span?autocommit=true"></property>
+		<property name="username" value="shopu8qk_spanbee"></property>
+		<property name="password" value="spanbee"></property>
 	</bean>
 
 	<bean id="hbAdapterBean"
@@ -64,134 +45,16 @@
 		<property name="jpaVendorAdapter" ref="hbAdapterBean"></property>
 	</bean>
 	
-	<bean id="patientPortalController"
-		class="com.mscripts.patientPortal.controller.PatientPortalController">
-		<property name="patientPortalService" ref="patientPortalService" />
-		<property name="requestParser" ref="requestParser" />
-	</bean>
-
-	<bean id="januviaController"
-		class="com.mscripts.patientPortal.controller.JanuviaController">
-		<property name="requestParser" ref="requestParser" />
-		<property name="patientPortalService" ref="patientPortalService" />
-	</bean>
-	
-	<bean id="requestParser"
-		class="com.mscripts.patientPortal.util.RequestParser">
-		<property name="requestParameters" ref="requestParameters" />
-		<property name="patientPortalService" ref="patientPortalService" />
-	</bean>
-	
-	<bean id="requestParameters" class="com.mscripts.patientPortal.model.RequestParameters">
+	<bean id="registrationController"
+		class="com.spanbee.controller.RegistrationController">
+		<property name="registrationService" ref="registrationService" />
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="emfBean"></property>
 	</bean>
 
-	<bean id="schedulerClient"
-		class="com.mscripts.jobhandlerquartz.client.SchedulerClientImpl">
-		<property name="quartzService" ref="quartzService" />
-		<property name="appConfiguration" ref="appConfiguration" />
-	</bean>
+	<context:component-scan base-package="com.spanbee.repositories" />
 
-	<bean id="quartzService"
-		class="com.mscripts.jobhandlerquartz.service.impl.QuartzServiceImpl">
-		<property name="quartzDao" ref="quartzDao" />
-		<property name="mailService" ref="mailService" />
-	</bean>
-
-	<bean id="quartzDao" class="com.mscripts.jobhandlerquartz.dao.jdbc.QuartzDaoJdbc">
-		<property name="spInvokerQuartz" ref="spInvokerQuartz" />
-	</bean>
-
-	<bean id="spInvokerQuartz" class="com.mscripts.dao.jdbc.SPInvokerImpl">
-		<property name="dataSource" ref="quartzDataSource" />
-	</bean>
-
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/mscripts_adherence_v6_6_dev?autoReconnect=true" />
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="username" value="mscriptsdb_write" />
-		<property name="password" value="${datasource.writepassword}" />
-	</bean>
-
-	<bean id="actionLogsDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/mscripts_adherence_v6_6_dev?autoReconnect=true" />
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="username" value="mscriptsdb_write" />
-		<property name="password" value="${datasource.writepassword}" />
-	</bean>
-
-	<bean id="readDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/mscripts_adherence_v6_6_dev?autoReconnect=true" />
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="username" value="mscriptsdb_write" />
-		<property name="password" value="${datasource.writepassword}" />
-	</bean>
-
-	<bean id="quartzDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url"
-			value="jdbc:mysql://emscripts.ca8fiejzon43.us-east-1.rds.amazonaws.com:3306/mscripts_adherence_jobs_v1?autoReconnect=true" />
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="username" value="mscriptsdb_write" />
-		<property name="password" value="${datasource.writepassword}" />
-	</bean>
-
-	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
-		<property name="algorithm">
-			<value>PBEWithMD5AndDES</value>
-		</property>
-		<property name="password">
-			<value>mscriptssecurity</value>
-		</property>
-	</bean>
-
-	<bean id="propertyConfigurer"
-		class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
-		<constructor-arg ref="configurationEncryptor" />
-		<property name="locations">
-			<list>
-				<value>/WEB-INF/runtime.properties</value>
-				<value>/WEB-INF/connection.properties</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-		<property name="from" value="admin@mscripts.com" />
-		<property name="subject" value="mscripts mail" />
-		<property name="text" value="mscripts mail" />
-	</bean>
-
-	<bean id="mailService" class="com.mscripts.service.impl.MailServiceImpl">
-		<property name="templateMessage" ref="templateMessage" />
-		<property name="appConfiguration" ref="appConfiguration" />
-		<property name="awsCredentials" ref="awsCredentials" />
-	</bean>
-
-	<bean id="awsCredentials" class="com.mscripts.utils.AwsCredentials">
-		<property name="accessKey" value="${datasource.accessKey}" />
-		<property name="secretKey" value="${datasource.secretKey}" />
-	</bean>
-
-	<bean id="appConfiguration" class="com.mscripts.utils.PropertyConfiguration"
-		init-method="init">
-		<property name="locations">
-			<list>
-				<value></value>
-			</list>
-		</property>
-	</bean>
-
-	<context:component-scan base-package="com.mscripts.patientPortal" />
-
-	<jpa:repositories base-package="com.mscripts.patientPortal.repository" />
+	<jpa:repositories base-package="com.spanbee.repositories" />
 </beans>

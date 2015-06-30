@@ -35,7 +35,7 @@ public class Customer implements Serializable {
 	@Column(name="first_name")
 	private String firstName;
 
-	private byte gender;
+	private String gender;
 
 	@Column(name="last_name")
 	private String lastName;
@@ -112,11 +112,11 @@ public class Customer implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public byte getGender() {
+	public String getGender() {
 		return this.gender;
 	}
 
-	public void setGender(byte gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

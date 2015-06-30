@@ -13,8 +13,12 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 
+
+
+import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
+import com.spanbee.service.RegistrationService;
 import com.spanbee.utils.Utils;
 /**
  * @author sucheth.s
@@ -24,7 +28,7 @@ import com.spanbee.utils.Utils;
 public class RegistrationController {
 
 
-
+  private RegistrationService registrationService;
   private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
 
   @POST
@@ -32,35 +36,38 @@ public class RegistrationController {
   @Path("/register")
   public String register(String jsonReqest) {
 
-    String version;
-    String session_id;
-    String request_origin;
-    JsonNode data;
+    String version=null;
+    String session_id=null;
+    String request_origin=null;
+    JsonNode data=null;
+    boolean registerFlag=false;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
     try {
       if (jsonReqest != null) {
-
         Request request = Utils.parseJsonRequest(jsonReqest);
         if (request != null) {
-          version = request.version;
-          session_id = request.session_id;
-          request_origin = request.request_origin;
-          JsonNode dataNode = request.data;
+          version = request.getVersion();
+          session_id = request.getSession_id();
+          request_origin = request.getRequest_origin();
+          JsonNode dataNode = request.getData();
           RegisterationParameters registerationParameters = null;
           LOGGER.debug("register Request::: " + " :: version from request: " + version
               + " :: session_id : " + session_id + " :: dataList : " + dataNode);
             JsonNode registerNode = dataNode.get("register");
             LOGGER.error("registerationParameters::" + registerNode.toString());
             registerationParameters = parseGetcodeRequest(registerNode.toString());
-            
-
+            registrationService = (RegistrationService) SpringApplicationContext.getBean("registrationService");
+            if(registrationService != null){
+             registerFlag=registrationService.register(registerationParameters, request);
+             if(registerFlag){
+               
+             }
+            }
         } else {
           LOGGER.error("request object after parsing the jsonReqest is null");
         }
-
-
       } else {
         LOGGER.warn("Request obtained is null");
       }
@@ -85,6 +92,14 @@ public class RegistrationController {
     }
     return parameters;
 }
+
+  public RegistrationService getRegistrationService() {
+    return registrationService;
+  }
+
+  public void setRegistrationService(RegistrationService registrationService) {
+    this.registrationService = registrationService;
+  }
 
   
 
