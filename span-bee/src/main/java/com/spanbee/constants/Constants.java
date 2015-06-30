@@ -11,7 +11,7 @@ public class Constants {
   public static final String DATE_FORMAT = "dd/MM/yyyy";
   static SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
   
-  
+      
   
   public static final String ERROR_TYPE_INLINE = "INLINE";
   public static final String FILTER_REFILL_REQ = "1";
@@ -42,7 +42,7 @@ public class Constants {
     System.out.println(chunks.length);
     String newDateString="";
     for(int i= chunks.length-1;i>=0;i--){
-      System.out.println(chunks[i]);
+      System.out.vfvprintln(chunks[i]);
       newDateString = newDateString + chunks[i];
           newDateString = newDateString + "-";
     }
