@@ -4,4 +4,4 @@
 		
 		<class>com.spanbee.entities.Customer</class>
 	</persistence-unit>
-</persistence>
+ </persistence>

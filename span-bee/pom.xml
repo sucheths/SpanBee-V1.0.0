@@ -17,7 +17,7 @@
 
 
 
-	<dependencyManagement>
+	 <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.glassfish.jersey</groupId>

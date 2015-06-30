@@ -17,7 +17,7 @@
 	
 	
 	<bean id="registrationController" class="com.spanbee.controller.RegistrationController">
-		<property name="registrationService" ref="registrationService" />
+	     	<property name="registrationService" ref="registrationService" />
 	</bean>
 	
 	
