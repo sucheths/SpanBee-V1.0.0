@@ -21,7 +21,7 @@ import com.spanbee.responseparameters.Response;
  */
 
 public class Utils {
-  private static final Logger LOGGER = Logger.getLogger(Utils.class);
+   private static final Logger LOGGER = Logger.getLogger(Utils.class);
 
 
   public static Request parseJsonRequest(String requestString) throws RequestParserException {
