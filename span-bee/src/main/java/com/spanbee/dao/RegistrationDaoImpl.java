@@ -23,25 +23,21 @@ public class RegistrationDaoImpl {
   @Resource
   private CustomerRepository customerRepository;
   
-  public boolean register(Customer customer) {
-
-    boolean registerFlag = false;
+  public Customer register(Customer customer) {
+    Customer cust = null;
     try {
       if (customer != null) {
         if (LOGGER.isInfoEnabled()) {
           LOGGER.info("Inside customer register method for customerId ::"
               + customer.getId());
         }
-        Customer cust= customerRepository.saveAndFlush(customer);
-
-        if (cust != null) {
-          registerFlag = true;
-        } 
+         cust= customerRepository.saveAndFlush(customer);
+        
       }
     } catch (Exception e) {
-      LOGGER.error("Exception Occured :", e);
+      LOGGER.error("Exception Occured while registering the User :", e);
     }
-    return registerFlag;
+    return cust;
   }
 
  

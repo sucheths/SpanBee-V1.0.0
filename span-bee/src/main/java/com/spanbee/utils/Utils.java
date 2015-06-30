@@ -1,5 +1,9 @@
 package com.spanbee.utils;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -8,6 +12,7 @@ import org.codehaus.jackson.annotate.JsonMethod;
 
 import com.spanbee.exceptions.RequestParserException;
 import com.spanbee.requestparameters.Request;
+import com.spanbee.responseparameters.Response;
 
 
 /**
@@ -54,5 +59,12 @@ public class Utils {
     }
     return birthDate;
   }
+  
+  public static String getResponseString(Response response) throws IOException {
+    ObjectMapper mapper1 = new ObjectMapper();
+    Writer strWriter1 = new StringWriter();
+    mapper1.writeValue(strWriter1, response);
+    return strWriter1.toString();
+}
 
 }

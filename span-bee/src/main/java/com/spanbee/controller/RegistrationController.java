@@ -42,7 +42,7 @@ public class RegistrationController {
     String session_id = null;
     String request_origin = null;
     JsonNode data = null;
-    boolean registerFlag = false;
+    String responseString = null;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
@@ -64,9 +64,7 @@ public class RegistrationController {
           // registrationService =(RegistrationService)
           // SpringApplicationContext.getBean("registrationService");
           if (registrationService != null) {
-            registerFlag = registrationService.register(registerationParameters, request);
-            if (registerFlag) {
-            }
+            responseString = registrationService.register(registerationParameters, request);
           }
         } else {
           LOGGER.error("request object after parsing the jsonReqest is null");
@@ -78,7 +76,7 @@ public class RegistrationController {
     } catch (Exception e) {
       LOGGER.error("Exception occurred ::", e);
     }
-    return "{\"status\":\"success\"}";
+    return responseString;
   }
 
   private RegisterationParameters parseGetcodeRequest(String registerParameters) {
