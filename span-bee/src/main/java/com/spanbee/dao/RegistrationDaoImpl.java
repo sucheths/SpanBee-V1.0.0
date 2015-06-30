@@ -17,7 +17,7 @@ import com.spanbee.service.RegistrationService;
 @Service
 public class RegistrationDaoImpl {
 
-  private static Logger LOGGER = Logger.getLogger(RegistrationDaoImpl.class);
+   private static Logger LOGGER = Logger.getLogger(RegistrationDaoImpl.class);
 
 
   @Resource
