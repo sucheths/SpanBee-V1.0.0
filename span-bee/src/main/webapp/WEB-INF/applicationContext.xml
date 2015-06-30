@@ -14,17 +14,18 @@
 	<bean id="springApplicationContext"
 		class="com.spanbee.listeners.SpringApplicationContext" />
 
-	<bean id="registrationService"
-		class="com.spanbee.service.RegistrationServiceImpl">
-		<property name="registrationDaoImpl" ref="registrationDaoImpl" />
-	</bean>
+	
 	
 	<bean id="registrationController" class="com.spanbee.controller.RegistrationController">
 		<property name="registrationService" ref="registrationService" />
 	</bean>
 	
+	
+	<bean id="registrationService"	class="com.spanbee.service.RegistrationServiceImpl">
+		<property name="registrationDaoImpl" ref="registrationDaoImpl" />
+	</bean>
+	
 	<bean id="registrationDaoImpl" class="com.spanbee.dao.RegistrationDaoImpl">
-		<property name="registrationService" ref="registrationService" />
 	</bean>
 	
 
@@ -36,7 +37,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url"
-			value="jdbc:mysql://208.91.198.55:3306/span?autocommit=true"></property>
+			value="jdbc:mysql://208.91.198.55:3306/shopu8qk_spanbee?autocommit=true"></property>
 		<property name="username" value="shopu8qk_spanbee"></property>
 		<property name="password" value="spanbee"></property>
 	</bean>
@@ -53,9 +54,6 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="jpaVendorAdapter" ref="hbAdapterBean"></property>
 	</bean>
-	
-	
-
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="emfBean"></property>
 	</bean>

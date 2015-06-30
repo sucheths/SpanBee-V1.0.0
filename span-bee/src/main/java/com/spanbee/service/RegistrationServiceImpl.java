@@ -30,8 +30,8 @@ public class RegistrationServiceImpl implements RegistrationService{
     if(LOGGER.isInfoEnabled()){
     LOGGER.info("**********@Inside register Method Of Service Layer**********");
     }
-    registrationDaoImpl =
-        (RegistrationDaoImpl) SpringApplicationContext.getBean("registrationDaoImpl");
+    //registrationDaoImpl =
+    //    (RegistrationDaoImpl) SpringApplicationContext.getBean("registrationDaoImpl");
     Customer customer=null;
     boolean registerFlag=false;
     try{

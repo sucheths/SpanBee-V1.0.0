@@ -19,7 +19,6 @@ public class RegistrationDaoImpl {
 
   private static Logger LOGGER = Logger.getLogger(RegistrationDaoImpl.class);
 
-  private RegistrationService registrationService;
 
   @Resource
   private CustomerRepository customerRepository;
@@ -45,9 +44,7 @@ public class RegistrationDaoImpl {
     return registerFlag;
   }
 
-  public void setRegistrationService(RegistrationService registrationService) {
-    this.registrationService = registrationService;
-  }
+ 
 
 
 }

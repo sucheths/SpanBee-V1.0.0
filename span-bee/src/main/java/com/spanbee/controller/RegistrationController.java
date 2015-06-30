@@ -1,5 +1,6 @@
 package com.spanbee.controller;
 
+import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -12,11 +13,14 @@ import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.RegistrationService;
 import com.spanbee.utils.Utils;
+
 /**
  * @author sucheth.s
  * 
@@ -25,6 +29,7 @@ import com.spanbee.utils.Utils;
 public class RegistrationController {
 
 
+  @Autowired
   private RegistrationService registrationService;
   private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
 
@@ -33,11 +38,11 @@ public class RegistrationController {
   @Path("/register")
   public String register(String jsonReqest) {
 
-    String version=null;
-    String session_id=null;
-    String request_origin=null;
-    JsonNode data=null;
-    boolean registerFlag=false;
+    String version = null;
+    String session_id = null;
+    String request_origin = null;
+    JsonNode data = null;
+    boolean registerFlag = false;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
@@ -52,15 +57,17 @@ public class RegistrationController {
           RegisterationParameters registerationParameters = null;
           LOGGER.debug("register Request::: " + " :: version from request: " + version
               + " :: session_id : " + session_id + " :: dataList : " + dataNode);
-            JsonNode registerNode = dataNode.get("register");
-            LOGGER.error("registerationParameters::" + registerNode.toString());
-            registerationParameters = parseGetcodeRequest(registerNode.toString());
-            if(registrationService != null){
-             registerFlag=registrationService.register(registerationParameters, request);
-             if(registerFlag){
-               
-             }
+          JsonNode registerNode = dataNode.get("register");
+          LOGGER.error("registerationParameters::" + registerNode.toString());
+          registerationParameters = parseGetcodeRequest(registerNode.toString());
+          LOGGER.info("registrationService:::" + registrationService);
+          // registrationService =(RegistrationService)
+          // SpringApplicationContext.getBean("registrationService");
+          if (registrationService != null) {
+            registerFlag = registrationService.register(registerationParameters, request);
+            if (registerFlag) {
             }
+          }
         } else {
           LOGGER.error("request object after parsing the jsonReqest is null");
         }
@@ -78,25 +85,24 @@ public class RegistrationController {
     RegisterationParameters parameters = null;
     LOGGER.debug("Parsing RegisterationRequest request for string : " + registerParameters);
     try {
-        ObjectMapper registerationMapper = new ObjectMapper();
-        registerationMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-        registerationMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
-        registerationMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        parameters = registerationMapper.readValue(registerParameters, RegisterationParameters.class);
+      ObjectMapper registerationMapper = new ObjectMapper();
+      registerationMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+      registerationMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
+      registerationMapper
+          .configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      parameters = registerationMapper.readValue(registerParameters, RegisterationParameters.class);
     } catch (Exception e) {
-        LOGGER.error("Error occured while parsing registeration Request Object : ", e);
+      LOGGER.error("Error occured while parsing registeration Request Object : ", e);
     }
     return parameters;
-}
-
-  public RegistrationService getRegistrationService() {
-    return registrationService;
   }
+
+
 
   public void setRegistrationService(RegistrationService registrationService) {
     this.registrationService = registrationService;
   }
 
-  
+
 
 }
