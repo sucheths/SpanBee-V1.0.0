@@ -13,9 +13,6 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 
-
-
-import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.RegistrationService;
@@ -58,7 +55,6 @@ public class RegistrationController {
             JsonNode registerNode = dataNode.get("register");
             LOGGER.error("registerationParameters::" + registerNode.toString());
             registerationParameters = parseGetcodeRequest(registerNode.toString());
-            registrationService = (RegistrationService) SpringApplicationContext.getBean("registrationService");
             if(registrationService != null){
              registerFlag=registrationService.register(registerationParameters, request);
              if(registerFlag){
@@ -80,7 +76,7 @@ public class RegistrationController {
 
   private RegisterationParameters parseGetcodeRequest(String registerParameters) {
     RegisterationParameters parameters = null;
-    LOGGER.debug("Parsing CodevaluesRequest request for string : " + registerParameters);
+    LOGGER.debug("Parsing RegisterationRequest request for string : " + registerParameters);
     try {
         ObjectMapper registerationMapper = new ObjectMapper();
         registerationMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);

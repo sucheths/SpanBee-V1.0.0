@@ -4,8 +4,10 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+
 import com.spanbee.entities.Customer;
 import com.spanbee.repositories.CustomerRepository;
+import com.spanbee.service.RegistrationService;
 
 
 /**
@@ -17,6 +19,7 @@ public class RegistrationDaoImpl {
 
   private static Logger LOGGER = Logger.getLogger(RegistrationDaoImpl.class);
 
+  private RegistrationService registrationService;
 
   @Resource
   private CustomerRepository customerRepository;
@@ -40,6 +43,10 @@ public class RegistrationDaoImpl {
       LOGGER.error("Exception Occured :", e);
     }
     return registerFlag;
+  }
+
+  public void setRegistrationService(RegistrationService registrationService) {
+    this.registrationService = registrationService;
   }
 
 
