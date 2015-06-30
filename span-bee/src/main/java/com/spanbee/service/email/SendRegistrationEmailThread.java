@@ -46,7 +46,7 @@ public class SendRegistrationEmailThread implements Runnable{
       Transport transport = mailSession.getTransport();
       MimeMessage message = new MimeMessage(mailSession);
 
-      message.setSubject(emailModel.getSubject());
+       message.setSubject(emailModel.getSubject());
       message.setFrom(new InternetAddress(emailModel.getFromAddress()));
       message.setContent(emailModel.getContent(),"text/html");
 
