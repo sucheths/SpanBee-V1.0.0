@@ -28,7 +28,7 @@ import com.spanbee.utils.Utils;
 @Path("registration")
 public class RegistrationController {
 
-
+ 
   @Autowired
   private RegistrationService registrationService;
   private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
