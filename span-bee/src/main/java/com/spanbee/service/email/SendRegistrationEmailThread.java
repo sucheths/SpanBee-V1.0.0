@@ -58,7 +58,6 @@ public class SendRegistrationEmailThread implements Runnable{
         message.addRecipients(Message.RecipientType.TO, toAddress);
         transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
       }
-
       LOGGER.info("Successfully sent email to:: E-mail Address::" +emailModel.getToaddess());
     } catch (MessagingException e) {
       LOGGER.error("Cannot Send email",e);

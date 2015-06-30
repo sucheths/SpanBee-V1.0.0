@@ -16,6 +16,7 @@ import com.spanbee.responseparameters.Response;
 import com.spanbee.service.email.SendRegistrationEmailThread;
 import com.spanbee.utils.EnumValues;
 import com.spanbee.utils.KeyGenerator;
+import com.spanbee.utils.PropertyReader;
 import com.spanbee.utils.Utils;
 
 /**
@@ -55,7 +56,6 @@ public class RegistrationServiceImpl implements RegistrationService{
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
         customer=registrationDaoImpl.register(customer);
-        
         if(customer!=null){
           Response resp = new Response();
           resp.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
@@ -63,8 +63,7 @@ public class RegistrationServiceImpl implements RegistrationService{
           resp.setMessage("Dear " +customer.getFirstName()+",Thank you for registering with us.Please click on the link that has been sent to "+customer.getEmailAddress());
           resp.setDescription("");
           responseString = Utils.getResponseString(resp);
-          
-           EmailModel emailModel = new EmailModel();
+          EmailModel emailModel = new EmailModel();
           emailModel.setSubject("Check E-mail SPAN-BEE");
           emailModel.setFromAddress("admin@shopus365.com");
           emailModel.setHostName("mail.shopus365.com");
@@ -82,6 +81,7 @@ public class RegistrationServiceImpl implements RegistrationService{
         
       }
     }catch(Exception e){
+     
       LOGGER.error("Exception occurred while registration ::",e);
     }
     return responseString;
@@ -95,5 +95,7 @@ public class RegistrationServiceImpl implements RegistrationService{
     this.registrationDaoImpl = registrationDaoImpl;
   }
 
+  
+  
 }
 

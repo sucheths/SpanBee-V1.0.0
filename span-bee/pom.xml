@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.spanbee</groupId>
-	<artifactId>span-bee</artifactId>
+	<artifactId>spanbee</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -17,7 +17,7 @@
 
 
 
-	 <dependencyManagement>
+	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.glassfish.jersey</groupId>
@@ -210,66 +210,66 @@
 			<artifactId>jackson-xml-databind</artifactId>
 			<version>0.6.2</version>
 		</dependency>
-		
-		
-		
-	<!-- New sucheth -->
-	
-	<dependency>
-	<groupId>org.hibernate.javax.persistence</groupId>
-	<artifactId>hibernate-jpa-2.1-api</artifactId>
-	<version>1.0.0.Final</version>
-</dependency>
-	<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-core</artifactId>
-	<version>4.3.5.Final</version>
-</dependency>
+
+
+
+		<!-- New sucheth -->
+
 		<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-entitymanager</artifactId>
-	<version>4.3.5.Final</version>
-</dependency>
-	
-<dependency>
-	<groupId>org.jboss.logging</groupId>
-	<artifactId>jboss-logging</artifactId>
-	<version>3.1.3.GA</version>
-</dependency>
-	<dependency>
-	<groupId>org.jboss</groupId>
-	<artifactId>jandex</artifactId>
-	<version>1.1.0.Final</version>
-</dependency>
-	<dependency>
-	<groupId>org.glassfish</groupId>
-	<artifactId>javax.transaction</artifactId>
-	<version>3.1.1-b05</version>
-</dependency>
-	<dependency>
-	<groupId>dom4j</groupId>
-	<artifactId>dom4j</artifactId>
-	<version>1.6.1</version>
-</dependency>
-	<dependency>
-	<groupId>org.hibernate.common</groupId>
-	<artifactId>hibernate-commons-annotations</artifactId>
-	<version>4.0.4.Final</version>
-</dependency>
-	<dependency>
-	<groupId>antlr</groupId>
-	<artifactId>antlr</artifactId>
-	<version>2.7.7</version>
-</dependency>
-	<dependency>
-    <groupId>org.glassfish.jersey.ext</groupId>
-    <artifactId>jersey-spring3</artifactId>
-    <version>2.19</version>
-</dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.3.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.5.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.1.3.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.transaction</artifactId>
+			<version>3.1.1-b05</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+			<version>2.19</version>
+		</dependency>
 	</dependencies>
 
 	<build>
-
+		<finalName>spanbee</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
