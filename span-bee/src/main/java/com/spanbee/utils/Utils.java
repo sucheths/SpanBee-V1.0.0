@@ -21,7 +21,7 @@ import com.spanbee.responseparameters.Response;
  */
 
 public class Utils {
-   private static final Logger LOGGER = Logger.getLogger(Utils.class);
+  private static final Logger LOGGER = Logger.getLogger(Utils.class);
 
 
   public static Request parseJsonRequest(String requestString) throws RequestParserException {
@@ -59,12 +59,28 @@ public class Utils {
     }
     return birthDate;
   }
-  
+
   public static String getResponseString(Response response) throws IOException {
     ObjectMapper mapper1 = new ObjectMapper();
     Writer strWriter1 = new StringWriter();
     mapper1.writeValue(strWriter1, response);
     return strWriter1.toString();
-}
+  }
+
+  public static String frameResponse(String code, String status, String message, String description) {
+    Response response = null;
+    String responseMsg = null;
+    try {
+      response = new Response();
+      response.setCode(code);
+      response.setDescription(description);
+      response.setMessage(message);
+      response.setStatus(status);
+      responseMsg = getResponseString(response);
+    } catch (Exception e) {
+      LOGGER.error("Exception occurred :", e);
+    }
+    return responseMsg;
+  }
 
 }

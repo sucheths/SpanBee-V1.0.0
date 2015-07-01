@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+
+
 import com.spanbee.constants.Constants;
 import com.spanbee.dao.RegistrationDaoImpl;
 import com.spanbee.entities.Customer;
@@ -14,6 +16,7 @@ import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.responseparameters.Response;
 import com.spanbee.service.email.SendRegistrationEmailThread;
+import com.spanbee.utils.AESSecurity;
 import com.spanbee.utils.EnumValues;
 import com.spanbee.utils.KeyGenerator;
 import com.spanbee.utils.PropertyReader;

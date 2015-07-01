@@ -13,5 +13,7 @@ import com.spanbee.entities.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, String>{
 
+  public Customer getCustomerInfoByEmailAddress(String emailId);
+
 }
 
