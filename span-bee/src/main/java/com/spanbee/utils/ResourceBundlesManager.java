@@ -91,6 +91,8 @@ public class ResourceBundlesManager implements Serializable {
 
           try
           {
+            
+            LOGGER.info("File Name::" +name);
               File f = new File(name);
               if(LOGGER.isDebugEnabled())
               {

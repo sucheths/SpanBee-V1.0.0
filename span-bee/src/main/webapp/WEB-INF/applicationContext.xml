@@ -33,6 +33,20 @@
 		proxy-target-class="false" />
 
 
+	
+	<!-- validate email controller -->
+	<bean id="emailController" class="com.spanbee.controller.EmailValidationController">
+	     	<property name="emailValidationService" ref="emailValidationService" />
+	</bean>
+	
+	<bean id="emailValidationService" class="com.spanbee.service.EmailValidationServiceImpl">
+	     	<property name="emailValidationDao" ref="emailValidationDao" />
+	</bean>
+	
+	<bean id="emailValidationDao" class="com.spanbee.dao.EmailValidationDaoImpl">
+	</bean>
+	
+	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>

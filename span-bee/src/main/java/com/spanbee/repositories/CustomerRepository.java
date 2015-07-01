@@ -21,7 +21,6 @@ public interface CustomerRepository extends JpaRepository<Customer, String>{
 
   public Customer getCustomerInfoByEmailAddress(String emailId);
 
-  public Customer getCustomerInfoByEmailAddress(String emailId);
 
 }
 

@@ -1,6 +1,7 @@
 package com.spanbee.utils;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.ServletContextEvent;
 
@@ -17,6 +18,7 @@ public class PropertyReader {
  
   private static final Logger LOGGER = Logger.getLogger(PropertyReader.class);
   public static ResourceBundlesManager resourceBundlesManager = null;
+  public static IniUtils iniUtils = null;
   
   public static void loadLog4j(String log4jFile, ServletContextEvent sce) {
     try {
@@ -55,6 +57,21 @@ public class PropertyReader {
         {
         resourceBundlesManager=  new ResourceBundlesManager(resourceFilePath);
         }
+  }
+  
+  public static void loadIniFile(String fileName, ServletContextEvent sce){
+    String iniFilePath=getFilePath(fileName, sce);
+    if(iniFilePath !=null){
+       iniUtils = new IniUtils();
+       try {
+        iniUtils.load(iniFilePath);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+       LOGGER.error("Error Loading Ini FILE");
+      }
+            
+    }
+    
   }
   
 }

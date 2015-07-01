@@ -13,8 +13,8 @@ public class Constants {
   //log4j configuration
   
   public static final String LOG4J_FILE = "log4j.properties";
-  public static final String RESOURCE_NAME = "resource.properties";
-  
+  public static final String RESOURCE_NAME = "resource";
+  public static final String APPLICATION_INI = "application.ini";
       
   
   public static final String ERROR_TYPE_INLINE = "INLINE";
