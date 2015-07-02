@@ -9,7 +9,7 @@ public class AuthenticationDaoImpl {
 
   private static Logger LOGGER = Logger.getLogger(AuthenticationDaoImpl.class);
 
-  private CommonDaoImpl commonDaoImpl;
+  private CommonDao commonDao;
 
   public Customer fetchCustomerInfoByEmailId(String emailId) {
 
@@ -19,7 +19,7 @@ public class AuthenticationDaoImpl {
     Customer customer = null;
     try {
       if (emailId != null) {
-        customer = commonDaoImpl.fetchCustomerByEmailId(emailId);
+        customer = commonDao.fetchCustomerByEmailId(emailId);
       }
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
@@ -35,7 +35,7 @@ public class AuthenticationDaoImpl {
     boolean sessionFlag= false;
     try {
       if (uniqueId != null) {
-        sessionFlag = commonDaoImpl.setCustomerSessionId(sessionId,uniqueId);
+        sessionFlag = commonDao.setCustomerSessionId(sessionId,uniqueId);
       }
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
@@ -43,12 +43,14 @@ public class AuthenticationDaoImpl {
     return sessionFlag;
   }
 
-  public CommonDaoImpl getCommonDaoImpl() {
-    return commonDaoImpl;
+  public CommonDao getCommonDao() {
+    return commonDao;
   }
 
-  public void setCommonDaoImpl(CommonDaoImpl commonDaoImpl) {
-    this.commonDaoImpl = commonDaoImpl;
+  public void setCommonDao(CommonDao commonDao) {
+    this.commonDao = commonDao;
   }
+
+ 
 
 }
