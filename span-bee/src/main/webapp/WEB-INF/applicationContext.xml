@@ -17,7 +17,6 @@
 	
 	
 	<bean id="registrationController" class="com.spanbee.controller.RegistrationController">
-	     	<property name="registrationService" ref="registrationService" />
 	</bean>
 	
 	<bean id="authenticationController" class="com.spanbee.controller.AuthenticationController">
@@ -25,19 +24,20 @@
 	</bean>
 	
 	<bean id="authenticationService"	class="com.spanbee.service.AuthenticationServiceImpl">
-		<property name="authenticationDaoImpl" ref="authenticationDaoImpl" />
+		<property name="authenticationDao" ref="authenticationDao" />
 	</bean>
 	
-	<bean id="authenticationDaoImpl" class="com.spanbee.dao.AuthenticationDaoImpl">
-	<property name="commonDaoImpl" ref="commonDaoImpl" />
+	<bean id="authenticationDao" class="com.spanbee.dao.AuthenticationDaoImpl">
+	<property name="commonDao" ref="commonDao" />
 	</bean>
 	
-	<bean id="commonDaoImpl" class="com.spanbee.dao.CommonDaoImpl">
+	<bean id="commonDao" class="com.spanbee.dao.CommonDaoImpl">
 	</bean>
 	
 	
 	<bean id="registrationService"	class="com.spanbee.service.RegistrationServiceImpl">
 		<property name="registrationDao" ref="registrationDao" />
+		<property name="authenticationDao" ref="authenticationDao" />
 	</bean>
 	
 	<bean id="registrationDao" class="com.spanbee.dao.RegistrationDaoImpl">

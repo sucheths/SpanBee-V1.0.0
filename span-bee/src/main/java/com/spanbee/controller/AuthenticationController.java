@@ -14,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.spanbee.constants.Constants;
 import com.spanbee.requestparameters.AuthenticationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.AuthenticationService;
@@ -60,11 +61,19 @@ public class AuthenticationController {
           LOGGER.error("registerationParameters::" + authenticateNode.toString());
           authenticationParameters = parseGetcodeRequest(authenticateNode.toString());
           LOGGER.info("registrationService:::" + authenticateService);
-          if (authenticateService != null) {
+          if (authenticateService != null && authenticationParameters != null) {
             responseString = authenticateService.authenticate(authenticationParameters, request);
+          }else{
+            responseString =
+                Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                    Constants.RESPONSE_FAILURE, "Something went wrong ", "");
+            LOGGER.error("Something went wrong while parsing request");
           }
         } else {
-          LOGGER.error("request object after parsing the jsonReqest is null");
+          responseString =
+              Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                  Constants.RESPONSE_FAILURE, "Something went wrong ", "");
+          LOGGER.error("Request obtained after parsing JSON request is null");
         }
       } else {
         LOGGER.warn("Request obtained is null");

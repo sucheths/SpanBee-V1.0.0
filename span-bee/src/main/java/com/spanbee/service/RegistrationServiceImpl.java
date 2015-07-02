@@ -4,10 +4,18 @@ package com.spanbee.service;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.springframework.cglib.core.EmitUtils;
+
+
+
+
+
 
 import com.spanbee.constants.Constants;
+import com.spanbee.dao.AuthenticationDaoImpl;
 import com.spanbee.dao.RegistrationDaoImpl;
 import com.spanbee.entities.Customer;
+import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.model.EmailModel;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
@@ -27,9 +35,8 @@ import com.spanbee.utils.Utils;
 public class RegistrationServiceImpl implements RegistrationService {
 
   private RegistrationDaoImpl registrationDao;
-  public void setRegistrationDao(RegistrationDaoImpl registrationDao) {
-    this.registrationDao = registrationDao;
-  }
+  private AuthenticationDaoImpl authenticationDao;
+  
 
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
@@ -46,16 +53,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     try {
       if (registrationParams != null && request != null) {
+        //Check if customer is already registered
+        customer=authenticationDao.fetchCustomerInfoByEmailId(registrationParams.getEmail_id());
+        if(customer == null){
         customer = new Customer();
         customer.setBirthDate(Utils.getDateFormat(registrationParams.getBirth_date()));
         customer.setCustomerStatus((byte) EnumValues.CustomerStatus.Active.ordinal());
-        customer.setEmailAddress(AESSecurity.encrypt(registrationParams.getEmail_id()));
+        customer.setEmailAddress(registrationParams.getEmail_id());
         customer.setFirstName(registrationParams.getFirst_name());
         customer.setGender(registrationParams.getGender());
         customer.setLastName(registrationParams.getLast_name());
         customer.setMaritalStatus(Byte.valueOf(registrationParams.getMarital_status()));
         customer.setMobile(registrationParams.getMobile());
-        customer.setPassword(AESSecurity.encrypt(registrationParams.getPassword()));
+        customer.setPassword(registrationParams.getPassword());
         customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
@@ -65,12 +75,12 @@ public class RegistrationServiceImpl implements RegistrationService {
           resp.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
           resp.setStatus(Constants.RESPONSE_SUCCESS);
 
-          String message =
-              PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en",
+          //String message =//"Dear $FIRST_NAME,Thank you for registering with us.Please click on the link that has been sent to $EMAIL to activate your profile.";
+              String message =    PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en",
                   "REGISTRATION_SUCCESS_MESSAGE");
           message =
               message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",
-                  AESSecurity.decrypt(customer.getEmailAddress()));
+                  customer.getEmailAddress());
           resp.setMessage(message);
           resp.setDescription("");
           responseString = Utils.getResponseString(resp);
@@ -84,15 +94,16 @@ public class RegistrationServiceImpl implements RegistrationService {
           emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
           String emailTemplate = getEmailTemplate(customer);
           emailModel.setContent(emailTemplate);
-          emailModel.setToaddess(AESSecurity.decrypt(customer.getEmailAddress()));
+          emailModel.setToaddess(customer.getEmailAddress());
           emailModel.setUserName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_USERNAME"));
           SendRegistrationEmailThread registrationThreadEmail =
               new SendRegistrationEmailThread(emailModel);
           Thread emailThread = new Thread(registrationThreadEmail);
           emailThread.start();
-
         }
-
+        }else{
+          responseString="This email id has been registered already.Please try with different email id";
+        }
       }
     } catch (Exception e) {
 
@@ -137,6 +148,17 @@ public class RegistrationServiceImpl implements RegistrationService {
     return emailTemplate;
   }
 
+  public void setRegistrationDao(RegistrationDaoImpl registrationDao) {
+    this.registrationDao = registrationDao;
+  }
+
+  public AuthenticationDaoImpl getAuthenticationDao() {
+    return authenticationDao;
+  }
+
+  public void setAuthenticationDao(AuthenticationDaoImpl authenticationDao) {
+    this.authenticationDao = authenticationDao;
+  }
   
 
 

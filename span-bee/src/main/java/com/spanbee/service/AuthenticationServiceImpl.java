@@ -5,7 +5,9 @@ import org.apache.log4j.Logger;
 
 
 
+
 import com.spanbee.constants.Constants;
+import com.spanbee.dao.AuthenticationDao;
 import com.spanbee.dao.AuthenticationDaoImpl;
 import com.spanbee.entities.Customer;
 import com.spanbee.requestparameters.AuthenticationParameters;
@@ -17,7 +19,7 @@ import com.spanbee.utils.Utils;
 
 public class AuthenticationServiceImpl implements AuthenticationService{
   
-  private AuthenticationDaoImpl authenticationDaoImpl;;
+  private AuthenticationDao authenticationDao;;
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
   @Override
@@ -41,11 +43,11 @@ public class AuthenticationServiceImpl implements AuthenticationService{
               + "::password ::" + password);
         }
         if (emailId != null) {
-          customer = authenticationDaoImpl.fetchCustomerInfoByEmailId(emailId);
+          customer = authenticationDao.fetchCustomerInfoByEmailId(emailId);
           if (customer != null) {
             if (password.equals(customer.getPassword())) {
               sessionId=KeyGenerator.getUniqueTransactionId();
-              sessionFlag=authenticationDaoImpl.setCustomerSessionId(sessionId, customer.getUniqueId());
+              sessionFlag=authenticationDao.setCustomerSessionId(sessionId, customer.getUniqueId());
               if(sessionFlag){
                 responseString =
                     Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
@@ -79,13 +81,15 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     return responseString;
   }
 
-  public AuthenticationDaoImpl getAuthenticationDaoImpl() {
-    return authenticationDaoImpl;
+  public AuthenticationDao getAuthenticationDao() {
+    return authenticationDao;
   }
 
-  public void setAuthenticationDaoImpl(AuthenticationDaoImpl authenticationDaoImpl) {
-    this.authenticationDaoImpl = authenticationDaoImpl;
+  public void setAuthenticationDao(AuthenticationDao authenticationDao) {
+    this.authenticationDao = authenticationDao;
   }
+
+ 
 
 
 }
