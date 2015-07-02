@@ -20,6 +20,21 @@
 	     	<property name="registrationService" ref="registrationService" />
 	</bean>
 	
+	<bean id="authenticationController" class="com.spanbee.controller.AuthenticationController">
+	     	
+	</bean>
+	
+	<bean id="authenticationService"	class="com.spanbee.service.AuthenticationServiceImpl">
+		<property name="authenticationDaoImpl" ref="authenticationDaoImpl" />
+	</bean>
+	
+	<bean id="authenticationDaoImpl" class="com.spanbee.dao.AuthenticationDaoImpl">
+	<property name="commonDaoImpl" ref="commonDaoImpl" />
+	</bean>
+	
+	<bean id="commonDaoImpl" class="com.spanbee.dao.CommonDaoImpl">
+	</bean>
+	
 	
 	<bean id="registrationService"	class="com.spanbee.service.RegistrationServiceImpl">
 		<property name="registrationDao" ref="registrationDao" />
