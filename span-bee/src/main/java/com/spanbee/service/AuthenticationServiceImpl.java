@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 
 
+
 import com.spanbee.constants.Constants;
 import com.spanbee.dao.AuthenticationDaoImpl;
 import com.spanbee.entities.Customer;
@@ -11,6 +12,7 @@ import com.spanbee.requestparameters.AuthenticationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.responseparameters.Response;
 import com.spanbee.utils.AESSecurity;
+import com.spanbee.utils.KeyGenerator;
 import com.spanbee.utils.Utils;
 
 public class AuthenticationServiceImpl implements AuthenticationService{
@@ -28,6 +30,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     String responseString = null;
     String emailId = null;
     String password = null;
+    String sessionId=null;
+    boolean sessionFlag=false;
     try {
       if (authenticationParameters != null && request != null) {
         emailId = authenticationParameters.getEmail_id();
@@ -40,9 +44,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
           customer = authenticationDaoImpl.fetchCustomerInfoByEmailId(emailId);
           if (customer != null) {
             if (password.equals(customer.getPassword())) {
-              responseString =
-                  Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
-                      Constants.RESPONSE_SUCCESS, "", "");
+              sessionId=KeyGenerator.getUniqueTransactionId();
+              sessionFlag=authenticationDaoImpl.setCustomerSessionId(sessionId, customer.getUniqueId());
+              if(sessionFlag){
+                responseString =
+                    Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
+                        Constants.RESPONSE_SUCCESS, "", "");
+              }else{
+                responseString =
+                    Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                        Constants.RESPONSE_FAILURE, "Could Not update session id", "");
+              }
+             
             } else {
               responseString =
                   Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,

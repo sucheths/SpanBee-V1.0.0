@@ -26,6 +26,22 @@ public class AuthenticationDaoImpl {
     }
     return customer;
   }
+  
+  public boolean setCustomerSessionId(String sessionId, String uniqueId) {
+
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Entered into setCustomerSessionId method for customer with id::" + uniqueId);
+    }
+    boolean sessionFlag= false;
+    try {
+      if (uniqueId != null) {
+        sessionFlag = commonDaoImpl.setCustomerSessionId(sessionId,uniqueId);
+      }
+    } catch (Exception e) {
+      LOGGER.error("Exception occurred :", e);
+    }
+    return sessionFlag;
+  }
 
   public CommonDaoImpl getCommonDaoImpl() {
     return commonDaoImpl;

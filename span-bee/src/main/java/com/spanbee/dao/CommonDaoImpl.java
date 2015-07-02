@@ -52,4 +52,20 @@ public class CommonDaoImpl {
     return cust;
   }
 
+  public boolean setCustomerSessionId(String sessionId, String uniqueId) {
+    boolean sessionFlag = false;
+    try {
+      if (sessionId != null && uniqueId != null) {
+        if (LOGGER.isInfoEnabled()) {
+          LOGGER.info("Inside setCustomerSessionId method for customer with uniqueI ::" + uniqueId);
+        }
+        sessionFlag = customerRepository.setCustomerSessionId(sessionId, uniqueId);
+
+        LOGGER.info("Returning status ::" + sessionFlag);
+      }
+    } catch (Exception e) {
+      LOGGER.error("Exception Occured while registering the User :", e);
+    }
+    return sessionFlag;
+  }
 }

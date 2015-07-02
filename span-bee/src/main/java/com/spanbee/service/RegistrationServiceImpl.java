@@ -32,7 +32,11 @@ import com.spanbee.utils.Utils;
 
 public class RegistrationServiceImpl implements RegistrationService {
 
-  private RegistrationDaoImpl registrationDaoImpl;
+  private RegistrationDaoImpl registrationDao;
+  public void setRegistrationDao(RegistrationDaoImpl registrationDao) {
+    this.registrationDao = registrationDao;
+  }
+
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
   @Override
@@ -61,7 +65,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
-        customer = registrationDaoImpl.register(customer);
+        customer = registrationDao.register(customer);
         if (customer != null) {
           Response resp = new Response();
           resp.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
@@ -77,20 +81,17 @@ public class RegistrationServiceImpl implements RegistrationService {
           resp.setDescription("");
           responseString = Utils.getResponseString(resp);
           EmailModel emailModel = new EmailModel();
-          emailModel.setSubject("");
-          emailModel.setFromAddress("");
-          emailModel.setHostName("");
-          emailModel.setPassword("");
-          emailModel.setPort("");
-          emailModel.setProtocol("");
-
+          emailModel.setSubject(PropertyReader.resourceBundlesManager
+              .getValueFromResourceBundle("en", "EMAIL_SUBJECT"));
+          emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
+          emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
+          emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
+          emailModel.setPort(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PORT"));
+          emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
           String emailTemplate = getEmailTemplate(customer);
-
-
-
           emailModel.setContent(emailTemplate);
           emailModel.setToaddess(customer.getEmailAddress());
-          emailModel.setUserName("");
+          emailModel.setUserName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_USERNAME"));
           SendRegistrationEmailThread registrationThreadEmail =
               new SendRegistrationEmailThread(emailModel);
           Thread emailThread = new Thread(registrationThreadEmail);
@@ -111,8 +112,7 @@ public class RegistrationServiceImpl implements RegistrationService {
    * @throws Exception
    */
   private String getEmailTemplate(Customer customer) throws Exception {
-    String emailTemplate =
-        PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
+    String emailTemplate =PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
     emailTemplate =
         emailTemplate.replace("$EMAIL_TITLE",
             PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TITLE"));
@@ -141,14 +141,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     return emailTemplate;
   }
 
-  public RegistrationDaoImpl getRegistrationDaoImpl() {
-    return registrationDaoImpl;
-  }
-
-  public void setRegistrationDaoImpl(RegistrationDaoImpl registrationDaoImpl) {
-    this.registrationDaoImpl = registrationDaoImpl;
-  }
-
+  
 
 
 }

@@ -24,7 +24,7 @@ public class EmailValidationDaoImpl implements EmailValidationDao {
         if (LOGGER.isInfoEnabled()) {
           LOGGER.info("Inside validateEmail method for uniqueId ::"    + uniqueId);
         }
-        validationFlag= customerRepository.setCustomerStatus(1,uniqueId);
+        validationFlag= customerRepository.setCustomerStatus((byte)1,uniqueId);
         
         LOGGER.info("Validation Flag::" +validationFlag);
         
