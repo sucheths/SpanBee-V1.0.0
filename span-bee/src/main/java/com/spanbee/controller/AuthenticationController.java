@@ -18,6 +18,7 @@ import com.spanbee.constants.Constants;
 import com.spanbee.requestparameters.AuthenticationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.AuthenticationService;
+import com.spanbee.utils.PropertyReader;
 import com.spanbee.utils.Utils;
 
 /**
@@ -36,13 +37,14 @@ public class AuthenticationController {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/authenticate")
-  public String authenticate(String jsonReqest){
+  public String authenticate(String jsonReqest) throws Exception{
 
     String version = null;
     String session_id = null;
     String request_origin = null;
     JsonNode data = null;
     String responseString = null;
+    String message = null;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register authenticate with request string :" + jsonReqest);
     }
@@ -64,21 +66,35 @@ public class AuthenticationController {
           if (authenticateService != null && authenticationParameters != null) {
             responseString = authenticateService.authenticate(authenticationParameters, request);
           }else{
+            message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
             responseString =
                 Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                    Constants.RESPONSE_FAILURE, "Something went wrong ", "");
+                    Constants.RESPONSE_FAILURE, message, "");
             LOGGER.error("Something went wrong while parsing request");
           }
         } else {
+          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
           responseString =
               Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                  Constants.RESPONSE_FAILURE, "Something went wrong ", "");
+                  Constants.RESPONSE_FAILURE,message, "");
           LOGGER.error("Request obtained after parsing JSON request is null");
         }
       } else {
+        message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+        responseString =
+            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                Constants.RESPONSE_FAILURE,message, "");
         LOGGER.warn("Request obtained is null");
       }
     } catch (Exception e) {
+      message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+          Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+      responseString =
+          Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+              Constants.RESPONSE_FAILURE,message, "");
       LOGGER.error("Exception occurred ::", e);
     }
     return responseString;

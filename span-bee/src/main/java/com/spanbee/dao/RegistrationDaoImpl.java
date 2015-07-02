@@ -1,6 +1,7 @@
 package com.spanbee.dao;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import com.spanbee.service.RegistrationService;
  *
  */
 @Service
-public class RegistrationDaoImpl {
+public class RegistrationDaoImpl implements RegistrationDao {
 
    private static Logger LOGGER = Logger.getLogger(RegistrationDaoImpl.class);
 
@@ -23,6 +24,8 @@ public class RegistrationDaoImpl {
   @Resource
   private CustomerRepository customerRepository;
   
+  @Transactional
+  @Override
   public Customer register(Customer customer) {
     Customer cust = null;
     try {
