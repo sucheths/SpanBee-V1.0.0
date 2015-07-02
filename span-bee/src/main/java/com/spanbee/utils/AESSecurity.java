@@ -44,5 +44,14 @@ public class AESSecurity {
       Key key = new SecretKeySpec(keyValue, ALGO);
       return key;
   }
+  
+  public static void main(String[] args) {
+    try{
+    System.out.println(encrypt("sucheth"));
+    System.out.println(decrypt("4FMCQOjlYICmgYklsA5v6g=="));
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+  }
 
 }
