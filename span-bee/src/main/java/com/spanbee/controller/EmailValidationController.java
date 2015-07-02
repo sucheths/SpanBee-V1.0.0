@@ -1,9 +1,12 @@
 package com.spanbee.controller;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -11,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.spanbee.service.EmailValidationService;
+import com.spanbee.utils.PropertyReader;
 
 
 /**
@@ -31,6 +35,7 @@ public class EmailValidationController {
 
   @GET
   @Path("/validate")
+  @Produces(MediaType.TEXT_HTML)
   public String validate(@QueryParam("unniqueid") String unniqueid,@Context UriInfo uriInfo,String request){
     MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters(); 
     String uid= queryParams.getFirst("uniqueid");
@@ -41,7 +46,15 @@ public class EmailValidationController {
       emailValidationService.validateEmail(uid);
     }
     
-    return "{\"name\":\"value\"}";
+    String response=null;
+    try {
+      response = PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    return response;
   }
   
 }

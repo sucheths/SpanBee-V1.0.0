@@ -84,7 +84,7 @@ public class RegistrationServiceImpl implements RegistrationService {
           emailModel.setSubject(PropertyReader.resourceBundlesManager
               .getValueFromResourceBundle("en", "EMAIL_SUBJECT"));
           emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
-          emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
+          emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_HOSTNAME"));
           emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
           emailModel.setPort(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PORT"));
           emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
@@ -113,6 +113,8 @@ public class RegistrationServiceImpl implements RegistrationService {
    */
   private String getEmailTemplate(Customer customer) throws Exception {
     String emailTemplate =PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
+    emailTemplate =
+        emailTemplate.replace("$EMAIL_USER_NAME",customer.getFirstName());
     emailTemplate =
         emailTemplate.replace("$EMAIL_TITLE",
             PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TITLE"));

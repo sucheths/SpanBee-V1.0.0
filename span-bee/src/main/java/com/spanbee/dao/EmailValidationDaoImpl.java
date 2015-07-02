@@ -1,6 +1,7 @@
 package com.spanbee.dao;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 
@@ -16,9 +17,10 @@ public class EmailValidationDaoImpl implements EmailValidationDao {
   private static Logger LOGGER = Logger.getLogger(EmailValidationDaoImpl.class);
   @Resource
   private CustomerRepository customerRepository;
+  @Transactional
   @Override
-  public boolean validateEmail(String uniqueId) {
-    boolean validationFlag = false;
+  public int validateEmail(String uniqueId) {
+    int validationFlag = 0;
     try {
       if (uniqueId != null) {
         if (LOGGER.isInfoEnabled()) {

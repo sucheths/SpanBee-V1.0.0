@@ -6,6 +6,6 @@ package com.spanbee.dao;
  */
 
 public interface EmailValidationDao {
-  public boolean validateEmail(String uniqueId);
+  public int validateEmail(String uniqueId);
 }
 

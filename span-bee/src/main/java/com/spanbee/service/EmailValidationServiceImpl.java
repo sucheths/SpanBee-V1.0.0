@@ -19,8 +19,8 @@ public class EmailValidationServiceImpl implements EmailValidationService{
   }
 
 
-  public boolean validateEmail(String uniqueId) {
-   boolean flag= emailValidationDao.validateEmail(uniqueId);
+  public int validateEmail(String uniqueId) {
+   int flag= emailValidationDao.validateEmail(uniqueId);
    
    LOGGER.info("flag:::" +flag);
     

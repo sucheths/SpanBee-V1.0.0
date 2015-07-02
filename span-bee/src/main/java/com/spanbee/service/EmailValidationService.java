@@ -8,7 +8,7 @@ package com.spanbee.service;
 public interface EmailValidationService {
 
   
-  public boolean validateEmail(String uniqueId);
+  public int validateEmail(String uniqueId);
   
 }
 
