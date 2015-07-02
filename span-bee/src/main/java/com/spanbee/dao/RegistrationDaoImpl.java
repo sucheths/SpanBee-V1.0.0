@@ -2,13 +2,11 @@ package com.spanbee.dao;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
 import com.spanbee.entities.Customer;
 import com.spanbee.repositories.CustomerRepository;
-import com.spanbee.service.RegistrationService;
+
 
 
 /**

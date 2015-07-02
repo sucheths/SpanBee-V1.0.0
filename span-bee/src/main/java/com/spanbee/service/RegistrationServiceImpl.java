@@ -35,7 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
   @Override
-  public String register(RegisterationParameters registrationParams, Request request) {
+  public String register(RegisterationParameters registrationParams, Request request) throws Exception {
 
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("**********@Inside register Method Of Service Layer**********");
@@ -44,6 +44,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     // (RegistrationDaoImpl) SpringApplicationContext.getBean("registrationDaoImpl");
     Customer customer = null;
     String responseString = null;
+    String message=null;
 
     try {
       if (registrationParams != null && request != null) {
@@ -65,21 +66,16 @@ public class RegistrationServiceImpl implements RegistrationService {
         customer.setUpdatedAt(new Date());
         customer = registrationDao.register(customer);
         if (customer != null) {
-          Response resp = new Response();
-          resp.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
-          resp.setStatus(Constants.RESPONSE_SUCCESS);
-
-          //String message =//"Dear $FIRST_NAME,Thank you for registering with us.Please click on the link that has been sent to $EMAIL to activate your profile.";
-              String message =    PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en",
-                  "REGISTRATION_SUCCESS_MESSAGE");
+          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.REGISTRATION_SUCCESS_MESSAGE);
           message =
-              message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",customer.getFirstName());
-          resp.setMessage(message);
-          resp.setDescription("");
-          responseString = Utils.getResponseString(resp);
+                  message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",customer.getEmailAddress());
+          responseString =
+                  Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
+                      Constants.RESPONSE_SUCCESS, message, "");
           EmailModel emailModel = new EmailModel();
           emailModel.setSubject(PropertyReader.resourceBundlesManager
-              .getValueFromResourceBundle("en", "EMAIL_SUBJECT"));
+              .getValueFromResourceBundle("en","EMAIL_SUBJECT"));
           emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
           emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_HOSTNAME"));
           emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
@@ -94,14 +90,30 @@ public class RegistrationServiceImpl implements RegistrationService {
           Thread emailThread = new Thread(registrationThreadEmail);
           emailThread.start();
         }
-        }else{
-          responseString="This email id has been registered already.Please try with different email id";
+        }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_ACTIVE){
+        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                    Constants.ERROR_CODE_700+Constants._ERROR_MESSAGE);
+                responseString =
+                    Utils.frameResponse(Constants.ERROR_CODE_700,
+                        Constants.RESPONSE_FAILURE, message, "");
+                LOGGER.fatal("Trying to register with already existing email id ");
+        }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_INACTIVE){
+        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                    Constants.ERROR_CODE_701+Constants._ERROR_MESSAGE);
+                responseString =
+                    Utils.frameResponse(Constants.ERROR_CODE_701,
+                        Constants.RESPONSE_FAILURE, message, "");
+                LOGGER.fatal("Customer has registered already but did not verify still");
         }
       }
     } catch (Exception e) {
-
-      LOGGER.error("Exception occurred while registration ::", e);
-    }
+    	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+        responseString =
+            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                Constants.RESPONSE_FAILURE,message, "");
+        LOGGER.error("Exception occurred ::", e);
+     }
     return responseString;
   }
 

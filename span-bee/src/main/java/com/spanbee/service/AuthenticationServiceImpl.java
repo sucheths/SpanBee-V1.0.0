@@ -25,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
   @Override
-  public String authenticate(AuthenticationParameters authenticationParameters, Request request) {
+  public String authenticate(AuthenticationParameters authenticationParameters, Request request) throws Exception {
     
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("**********@Inside authenticate Method Of Service Layer**********");
@@ -38,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     String sessionId=null;
     String message=null;
     boolean sessionFlag=false;
+    byte status=0;
     try {
       if (authenticationParameters != null && request != null) {
         emailId =AESSecurity.encrypt(authenticationParameters.getEmail_id());
@@ -50,41 +51,54 @@ public class AuthenticationServiceImpl implements AuthenticationService{
           customer = authenticationDao.fetchCustomerInfoByEmailId(emailId);
           LOGGER.info("customer ::"+customer);
           if (customer != null) {
-            decryptedPass=AESSecurity.decrypt(customer.getPassword());
-           //yet to be done
-            // customer.getCustomerStatus();
-            LOGGER.info("decryptedPass ::"+decryptedPass);
-            if (password.equals(decryptedPass) ) {
-              sessionId= new KeyGenerator().generateSessionID(AESSecurity.decrypt(customer.getEmailAddress()));
-              sessionFlag=authenticationDao.setCustomerSessionId(sessionId, customer.getUniqueId());
-              if(sessionFlag){
-                 message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                    Constants.AUTHENTICATION_SUCCESS);
-                responseString =
-                    Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
-                        Constants.RESPONSE_SUCCESS, message, "");
-              }else{
-                message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                    Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-                responseString =
-                    Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
-                        Constants.RESPONSE_SUCCESS, message, "");
-              }
-             
-            } else {
-              message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                  Constants.ERROR_CODE_501+Constants._ERROR_MESSAGE);
-              responseString =
-                  Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                      Constants.RESPONSE_FAILURE, message, "");
-            }
+        	status=customer.getCustomerStatus();
+        	if(status==Constants.STATUS_ACTIVE){
+        		decryptedPass=AESSecurity.decrypt(customer.getPassword());
+                LOGGER.info("decryptedPass ::"+decryptedPass);
+                if (password.equals(decryptedPass) ) {
+                  sessionId= new KeyGenerator().generateSessionID(AESSecurity.decrypt(customer.getEmailAddress()));
+                  sessionFlag=authenticationDao.setCustomerSessionId(sessionId, customer.getUniqueId());
+                  if(sessionFlag){
+                     message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                        Constants.AUTHENTICATION_SUCCESS);
+                    responseString =
+                        Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
+                            Constants.RESPONSE_SUCCESS, message, "");
+                    LOGGER.fatal("Login success for customer with unique id ::"+customer.getUniqueId());
+                  }else{
+                    message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                        Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+                    responseString =
+                        Utils.frameResponse(Constants.ERROR_CODE_500,
+                            Constants.RESPONSE_FAILURE, message, "");
+                    LOGGER.fatal("Failed to update session id for customer with unique id ::"+customer.getUniqueId());
+                  }
+                 
+                } else {
+                  message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                      Constants.ERROR_CODE_501+Constants._ERROR_MESSAGE);
+                  responseString =
+                      Utils.frameResponse(Constants.ERROR_CODE_501,
+                          Constants.RESPONSE_FAILURE, message, "");
+                  LOGGER.fatal("Login failed for customer with unique id ::"+customer.getUniqueId());
+                }
+        	}else if(status==Constants.STATUS_INACTIVE){
+        		message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                        Constants.ERROR_CODE_600+Constants._ERROR_MESSAGE);
+                    responseString =
+                        Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                            Constants.RESPONSE_FAILURE, message, "");
+                    LOGGER.fatal("Status is inactive for the customer with unique id ::"+customer.getUniqueId());
+        	}
+        	
           } else {
-            message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                Constants.ERROR_CODE_501+Constants._ERROR_MESSAGE);
-            responseString =
-                Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                    Constants.RESPONSE_FAILURE, message, "");
-          }
+                  message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                      Constants.ERROR_CODE_501+Constants._ERROR_MESSAGE);
+                  responseString =
+                      Utils.frameResponse(Constants.ERROR_CODE_501,
+                          Constants.RESPONSE_FAILURE, message, "");
+                  LOGGER.fatal("Customer is not registered yet and trying to login");
+                }
         }
       }else{
         message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
@@ -92,14 +106,20 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         responseString =
             Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
                 Constants.RESPONSE_FAILURE, "Invalid Username or Password", "");
+        LOGGER.fatal("Authentication parameters obtained is null for this request");
         
       }
       if (LOGGER.isInfoEnabled()) {
         LOGGER.info("Sending response message after authentication is ::"+responseString );
       }
     } catch (Exception e) {
-      LOGGER.error("Exception occurred while authenticate ::", e);
-    }
+    	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+        responseString =
+            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                Constants.RESPONSE_FAILURE,message, "");
+        LOGGER.error("Exception occurred ::", e);
+        }
     return responseString;
   }
 

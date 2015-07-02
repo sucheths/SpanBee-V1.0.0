@@ -72,6 +72,7 @@ public class RegistrationController {
             responseString =
                 Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
                     Constants.RESPONSE_FAILURE,message, "");
+            LOGGER.error("request object after parsing the jsonReqest is null");
           }
         } else {
           message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
@@ -87,8 +88,9 @@ public class RegistrationController {
         responseString =
             Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
                 Constants.RESPONSE_FAILURE,message, "");
-        LOGGER.warn("Request obtained is null");
+        LOGGER.warn("JSON Request obtained is null");
       }
+      LOGGER.fatal("Sending response to the customer ::"+responseString);
 
     } catch (Exception e) {
       message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,

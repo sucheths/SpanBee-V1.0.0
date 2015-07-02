@@ -5,6 +5,6 @@ import com.spanbee.requestparameters.Request;
 
 public interface AuthenticationService {
 
-  public String authenticate(AuthenticationParameters authenticationParameters,Request request);
+  public String authenticate(AuthenticationParameters authenticationParameters,Request request) throws Exception;
   
 }
