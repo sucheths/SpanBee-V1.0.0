@@ -15,10 +15,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.spanbee.constants.Constants;
 import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.RegistrationService;
+import com.spanbee.utils.PropertyReader;
 import com.spanbee.utils.Utils;
 
 /**
@@ -36,13 +38,15 @@ public class RegistrationController {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/register")
-  public String register(String jsonReqest) {
+  public String register(String jsonReqest) throws Exception {
 
     String version = null;
     String session_id = null;
     String request_origin = null;
     JsonNode data = null;
     String responseString = null;
+    RegisterationParameters registerationParameters = null;
+    String message=null;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
@@ -54,26 +58,44 @@ public class RegistrationController {
           session_id = request.getSession_id();
           request_origin = request.getRequest_origin();
           JsonNode dataNode = request.getData();
-          RegisterationParameters registerationParameters = null;
           LOGGER.debug("register Request::: " + " :: version from request: " + version
               + " :: session_id : " + session_id + " :: dataList : " + dataNode);
           JsonNode registerNode = dataNode.get("register");
           LOGGER.error("registerationParameters::" + registerNode.toString());
           registerationParameters = parseGetcodeRequest(registerNode.toString());
           LOGGER.info("registrationService:::" + registrationService);
-          // registrationService =(RegistrationService)
-          // SpringApplicationContext.getBean("registrationService");
-          if (registrationService != null) {
+          if (registrationService != null && registerationParameters != null) {
             responseString = registrationService.register(registerationParameters, request);
+          }else{
+            message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+            responseString =
+                Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                    Constants.RESPONSE_FAILURE,message, "");
           }
         } else {
+          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+          responseString =
+              Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                  Constants.RESPONSE_FAILURE,message, "");
           LOGGER.error("request object after parsing the jsonReqest is null");
         }
       } else {
+        message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+        responseString =
+            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                Constants.RESPONSE_FAILURE,message, "");
         LOGGER.warn("Request obtained is null");
       }
 
     } catch (Exception e) {
+      message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+          Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
+      responseString =
+          Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+              Constants.RESPONSE_FAILURE,message, "");
       LOGGER.error("Exception occurred ::", e);
     }
     return responseString;

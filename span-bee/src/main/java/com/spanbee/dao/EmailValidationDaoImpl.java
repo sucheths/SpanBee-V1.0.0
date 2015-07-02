@@ -17,6 +17,8 @@ public class EmailValidationDaoImpl implements EmailValidationDao {
   private static Logger LOGGER = Logger.getLogger(EmailValidationDaoImpl.class);
   @Resource
   private CustomerRepository customerRepository;
+  
+  
   @Transactional
   @Override
   public int validateEmail(String uniqueId) {

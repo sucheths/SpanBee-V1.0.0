@@ -1,16 +1,20 @@
 package com.spanbee.dao;
 
+import javax.transaction.Transactional;
+
 import org.apache.log4j.Logger;
 
 import com.spanbee.entities.Customer;
 
 
-public class AuthenticationDaoImpl {
+public class AuthenticationDaoImpl implements AuthenticationDao {
 
   private static Logger LOGGER = Logger.getLogger(AuthenticationDaoImpl.class);
 
   private CommonDao commonDao;
 
+  @Transactional
+  @Override
   public Customer fetchCustomerInfoByEmailId(String emailId) {
 
     if (LOGGER.isInfoEnabled()) {
@@ -27,6 +31,8 @@ public class AuthenticationDaoImpl {
     return customer;
   }
   
+  @Transactional
+  @Override
   public boolean setCustomerSessionId(String sessionId, String uniqueId) {
 
     if (LOGGER.isInfoEnabled()) {

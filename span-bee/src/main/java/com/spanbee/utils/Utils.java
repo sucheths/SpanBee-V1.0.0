@@ -3,6 +3,9 @@ package com.spanbee.utils;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -22,7 +25,6 @@ import com.spanbee.responseparameters.Response;
 
 public class Utils {
   private static final Logger LOGGER = Logger.getLogger(Utils.class);
-
 
   public static Request parseJsonRequest(String requestString) throws RequestParserException {
     Request req = null;
@@ -82,5 +84,10 @@ public class Utils {
     }
     return responseMsg;
   }
+  
+  
+ 
+
+
 
 }
