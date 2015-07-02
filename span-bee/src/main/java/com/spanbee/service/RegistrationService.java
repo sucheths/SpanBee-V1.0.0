@@ -10,7 +10,7 @@ import com.spanbee.requestparameters.Request;
 
 public interface RegistrationService {
   
-   public String register(RegisterationParameters registrationParams,Request request);
+   public String register(RegisterationParameters registrationParams,Request request) throws Exception;
    
 
 }

@@ -18,12 +18,19 @@ public class Constants {
   public static final String LANGUAGE= "en";   
   
   public static final String AUTHENTICATION_SUCCESS="AUTHENTICATION_SUCCESS";
+  
+  public static final String REGISTRATION_SUCCESS_MESSAGE="REGISTRATION_SUCCESS_MESSAGE";
 
   
   public static final String ERROR_TYPE_INLINE = "INLINE";
   public static final String FILTER_REFILL_REQ = "1";
   
   public static final String FILTER_REFILL_REM = "0";
+  
+  public static final byte STATUS_ACTIVE= 1;
+  
+  public static final byte STATUS_INACTIVE= 0;
+  
   
   public static final String RESPONSE_SUCCESS = "SUCCESS";
   
@@ -38,6 +45,12 @@ public class Constants {
   public static final String ERROR_CODE_500= "500";
   
   public static final String ERROR_CODE_501= "501";
+  
+  public static final String ERROR_CODE_600= "600";
+  
+  public static final String ERROR_CODE_700= "700";
+  
+  public static final String ERROR_CODE_701= "701";
   
   
   
