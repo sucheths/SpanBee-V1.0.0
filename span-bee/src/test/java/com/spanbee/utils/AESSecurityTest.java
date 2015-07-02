@@ -14,7 +14,7 @@ public class AESSecurityTest {
   
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-  //Loading log4j properties
+    //Loading log4j properties
     String logFileName = "log4j.properties";
     String logCompletepath = ""; 
     String web_inf_path = "";

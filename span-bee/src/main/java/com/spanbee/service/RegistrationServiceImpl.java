@@ -4,16 +4,10 @@ package com.spanbee.service;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.springframework.cglib.core.EmitUtils;
-
-
-
-
 
 import com.spanbee.constants.Constants;
 import com.spanbee.dao.RegistrationDaoImpl;
 import com.spanbee.entities.Customer;
-import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.model.EmailModel;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;

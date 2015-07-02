@@ -21,8 +21,8 @@ public class AESSecurity {
   private static final byte[] keyValue = 
       new byte[] { 'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r','e', 't', 'K', 'e', 'y' };
 
-   public static String encrypt(String Data) throws Exception {
-       Key key = generateKey();
+  public static String encrypt(String Data) throws Exception {
+      Key key = generateKey();
       Cipher c = Cipher.getInstance(ALGO);
       c.init(Cipher.ENCRYPT_MODE, key);
       byte[] encVal = c.doFinal(Data.getBytes());
