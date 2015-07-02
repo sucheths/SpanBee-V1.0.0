@@ -1,16 +1,20 @@
 package com.spanbee.dao;
 
+import javax.transaction.Transactional;
+
 import org.apache.log4j.Logger;
 
 import com.spanbee.entities.Customer;
 
 
-public class AuthenticationDaoImpl {
+public class AuthenticationDaoImpl implements AuthenticationDao {
 
   private static Logger LOGGER = Logger.getLogger(AuthenticationDaoImpl.class);
 
-  private CommonDaoImpl commonDaoImpl;
+  private CommonDao commonDao;
 
+  @Transactional
+  @Override
   public Customer fetchCustomerInfoByEmailId(String emailId) {
 
     if (LOGGER.isInfoEnabled()) {
@@ -19,7 +23,7 @@ public class AuthenticationDaoImpl {
     Customer customer = null;
     try {
       if (emailId != null) {
-        customer = commonDaoImpl.fetchCustomerByEmailId(emailId);
+        customer = commonDao.fetchCustomerByEmailId(emailId);
       }
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
@@ -27,6 +31,8 @@ public class AuthenticationDaoImpl {
     return customer;
   }
   
+  @Transactional
+  @Override
   public boolean setCustomerSessionId(String sessionId, String uniqueId) {
 
     if (LOGGER.isInfoEnabled()) {
@@ -35,7 +41,7 @@ public class AuthenticationDaoImpl {
     boolean sessionFlag= false;
     try {
       if (uniqueId != null) {
-        sessionFlag = commonDaoImpl.setCustomerSessionId(sessionId,uniqueId);
+        sessionFlag = commonDao.setCustomerSessionId(sessionId,uniqueId);
       }
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
@@ -43,12 +49,14 @@ public class AuthenticationDaoImpl {
     return sessionFlag;
   }
 
-  public CommonDaoImpl getCommonDaoImpl() {
-    return commonDaoImpl;
+  public CommonDao getCommonDao() {
+    return commonDao;
   }
 
-  public void setCommonDaoImpl(CommonDaoImpl commonDaoImpl) {
-    this.commonDaoImpl = commonDaoImpl;
+  public void setCommonDao(CommonDao commonDao) {
+    this.commonDao = commonDao;
   }
+
+ 
 
 }
