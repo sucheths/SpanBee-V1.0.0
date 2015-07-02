@@ -55,13 +55,13 @@ public class RegistrationServiceImpl implements RegistrationService {
         customer = new Customer();
         customer.setBirthDate(Utils.getDateFormat(registrationParams.getBirth_date()));
         customer.setCustomerStatus((byte) EnumValues.CustomerStatus.Active.ordinal());
-        customer.setEmailAddress(registrationParams.getEmail_id());
+        customer.setEmailAddress(AESSecurity.encrypt(registrationParams.getEmail_id()));
         customer.setFirstName(registrationParams.getFirst_name());
         customer.setGender(registrationParams.getGender());
         customer.setLastName(registrationParams.getLast_name());
         customer.setMaritalStatus(Byte.valueOf(registrationParams.getMarital_status()));
         customer.setMobile(registrationParams.getMobile());
-        customer.setPassword(registrationParams.getPassword());
+        customer.setPassword(AESSecurity.encrypt(registrationParams.getPassword()));
         customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
@@ -76,7 +76,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                   "REGISTRATION_SUCCESS_MESSAGE");
           message =
               message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",
-                  customer.getEmailAddress());
+                  AESSecurity.decrypt(customer.getEmailAddress()));
           resp.setMessage(message);
           resp.setDescription("");
           responseString = Utils.getResponseString(resp);
@@ -90,7 +90,7 @@ public class RegistrationServiceImpl implements RegistrationService {
           emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
           String emailTemplate = getEmailTemplate(customer);
           emailModel.setContent(emailTemplate);
-          emailModel.setToaddess(customer.getEmailAddress());
+          emailModel.setToaddess(AESSecurity.decrypt(customer.getEmailAddress()));
           emailModel.setUserName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_USERNAME"));
           SendRegistrationEmailThread registrationThreadEmail =
               new SendRegistrationEmailThread(emailModel);

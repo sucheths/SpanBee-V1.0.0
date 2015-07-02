@@ -40,7 +40,7 @@ public class AESSecurityTest {
     LOGGER.info("********* Inside testEncrypt method ************");
     String emailId = "adc@test.com";
     try {
-      System.out.println("Encrypted Str : " + AESSecurity.encrypt(emailId.getBytes("UTF-8")));
+      System.out.println("Encrypted Str : " + AESSecurity.encrypt(emailId));
     } catch(Exception e) {
         LOGGER.error("Exception occured while encrypting : " , e);
     }
@@ -51,12 +51,10 @@ public class AESSecurityTest {
   @Test
   public void testDecrypt() {
     LOGGER.info("********* Inside testDecrypt method ************");
-    String toEncrypt = "adc@test.com";
+    String encrytedStr = "OE17NbhL79lGuYiVKO3ESQ==";
     
     try {
-      byte[] encrytedStr = AESSecurity.encrypt(toEncrypt.getBytes("UTF-8"));
-      String str = new String(AESSecurity.decrypt(encrytedStr));
-      System.out.println("Decrypted Str : " + str);
+      System.out.println("Decrypted Str : " + AESSecurity.decrypt(encrytedStr));
     } catch(Exception e) {
       LOGGER.error("Exception occured while decrypting : " , e);
     }
