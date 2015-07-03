@@ -21,6 +21,10 @@ public class Response {
     
     private String description;
     
+    private String sessionId;
+    
+    private String nextPage;
+    
     private Object data;
 
     public String getStatus() {
@@ -77,6 +81,22 @@ public class Response {
 
     public void setError_id(String error_id) {
         this.error_id = error_id;
+    }
+
+    public String getSessionId() {
+      return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+      this.sessionId = sessionId;
+    }
+
+    public String getNextPage() {
+      return nextPage;
+    }
+
+    public void setNextPage(String nextPage) {
+      this.nextPage = nextPage;
     }
 }
 
