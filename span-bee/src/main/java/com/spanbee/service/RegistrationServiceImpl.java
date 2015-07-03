@@ -77,15 +77,15 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
         }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_ACTIVE){
         	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                    Constants.ERROR_CODE_700+Constants._ERROR_MESSAGE);
+                    Constants.ERROR_CODE_520+Constants._ERROR_MESSAGE);
                 responseString =
-                    Utils.frameResponse(Constants.ERROR_CODE_700,
+                    Utils.frameResponse(Constants.ERROR_CODE_520,
                         Constants.RESPONSE_FAILURE, message, "");
                 LOGGER.fatal("Trying to register with already existing email id ");
         }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_INACTIVE){
           
-        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,Constants.ERROR_CODE_701+Constants._ERROR_MESSAGE);
-                responseString =Utils.frameResponse(Constants.ERROR_CODE_701,
+        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,Constants.ERROR_CODE_521+Constants._ERROR_MESSAGE);
+                responseString =Utils.frameResponse(Constants.ERROR_CODE_521,
                         Constants.RESPONSE_FAILURE, message, "");
                 LOGGER.fatal("Customer has registered already but did not verify still");
                 sendEmail(customer);

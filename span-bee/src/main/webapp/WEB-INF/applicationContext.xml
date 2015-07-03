@@ -61,6 +61,14 @@
 	<bean id="emailValidationDao" class="com.spanbee.dao.EmailValidationDaoImpl">
 	</bean>
 	
+	<!-- Password controller -->
+	<bean id="passwordController" class="com.spanbee.controller.PasswordController">
+	     	<property name="passwordService" ref="passwordService" />
+	</bean>
+	
+	<bean id="passwordService" class="com.spanbee.service.PasswordServiceImpl">
+	     	<property name="emailValidationDao" ref="emailValidationDao" />
+	</bean>
 	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

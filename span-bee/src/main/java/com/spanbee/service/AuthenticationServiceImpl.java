@@ -84,9 +84,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 }
         	}else if(status==Constants.STATUS_INACTIVE){
         		message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                        Constants.ERROR_CODE_600+Constants._ERROR_MESSAGE);
+                        Constants.ERROR_CODE_510+Constants._ERROR_MESSAGE);
                     responseString =
-                        Utils.frameResponse(Constants.ERROR_CODE_600,
+                        Utils.frameResponse(Constants.ERROR_CODE_510,
                             Constants.RESPONSE_FAILURE, message, "");
                     LOGGER.fatal("Status is inactive for the customer with unique id ::"+customer.getUniqueId());
         	}

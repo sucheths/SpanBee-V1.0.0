@@ -48,7 +48,7 @@ public class EmailValidationController {
     
     String response=null;
     try {
-      response = PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
+      response = PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "VERIFICATION_EMAIL_TEMPLATE");
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

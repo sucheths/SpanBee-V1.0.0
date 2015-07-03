@@ -46,18 +46,20 @@ public class Constants {
   
   public static final String ERROR_CODE_501= "501";
   
-  public static final String ERROR_CODE_600= "600";
+  public static final String ERROR_CODE_510= "510";
   
-  public static final String ERROR_CODE_700= "700";
+  public static final String ERROR_CODE_520= "520";
   
-  public static final String ERROR_CODE_701= "701";
+  public static final String ERROR_CODE_521= "521";
   
   
   
   public static final String _ERROR_MESSAGE= "_ERROR_MESSAGE";
   
+  public static final String FORGOTPASSWORD_SUCCESS_MESSAGE = "FORGOTPASSWORD_SUCCESS_MESSAGE";
   
+  public static final String ERROR_CODE_502= "502";
   
-
+  public static final String ERROR_CODE_503= "503";
  
 }
