@@ -49,7 +49,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     try {
       if (registrationParams != null && request != null) {
         //Check if customer is already registered
-        customer=authenticationDao.fetchCustomerInfoByEmailId(registrationParams.getEmail_id());
+        customer=authenticationDao.fetchCustomerInfoByEmailId(AESSecurity.encrypt(registrationParams.getEmail_id()));
         if(customer == null){
         customer = new Customer();
         customer.setBirthDate(Utils.getDateFormat(registrationParams.getBirth_date()));
