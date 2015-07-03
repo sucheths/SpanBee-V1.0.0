@@ -42,7 +42,7 @@ public class Constants {
   
   public static final String HTTP_STATUS_CODE_FAILURE = "500";
   
-  public static final String ERROR_CODE_500= "500";
+   public static final String ERROR_CODE_500= "500";
   
   public static final String ERROR_CODE_501= "501";
   
