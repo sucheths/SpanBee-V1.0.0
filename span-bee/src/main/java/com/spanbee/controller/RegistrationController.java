@@ -1,6 +1,5 @@
 package com.spanbee.controller;
 
-import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,7 +15,6 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.spanbee.constants.Constants;
-import com.spanbee.listeners.SpringApplicationContext;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
 import com.spanbee.service.RegistrationService;
@@ -27,7 +25,7 @@ import com.spanbee.utils.Utils;
  * @author sucheth.s
  * 
  */
-@Path("registration")
+@Path("registration") 
 public class RegistrationController {
 
  

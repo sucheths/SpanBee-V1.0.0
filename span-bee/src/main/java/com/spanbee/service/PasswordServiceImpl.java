@@ -55,7 +55,7 @@ public class PasswordServiceImpl implements PasswordService {
                   Constants.RESPONSE_FAILURE, message, "");
           LOGGER.fatal("Trying to send password mail to already existing customer");
         }
-      }
+      } 
       else {
         message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
             Constants.ERROR_CODE_503 + Constants._ERROR_MESSAGE);

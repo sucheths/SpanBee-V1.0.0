@@ -46,7 +46,7 @@ public class PasswordController {
         Request request = Utils.parseJsonRequest(jsonReqest);
         if (request != null) {
           version = request.getVersion();
-          session_id = request.getSession_id();
+          session_id = request.getSession_id(); 
           JsonNode dataNode = request.getData();
           
           if(LOGGER.isDebugEnabled()) {
