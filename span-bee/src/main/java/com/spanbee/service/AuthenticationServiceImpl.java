@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 LOGGER.info("decryptedPass ::"+decryptedPass);
                 if (password.equals(decryptedPass) ) {
                   sessionId= new KeyGenerator().generateSessionID(AESSecurity.decrypt(customer.getEmailAddress()));
-                  sessionFlag=authenticationDao.setCustomerSessionId(sessionId, customer.getUniqueId());
+                  sessionFlag=authenticationDao.setCustomerSessionId(sessionId, customer.getId());
                   if(sessionFlag){
                      message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
                         Constants.AUTHENTICATION_SUCCESS);
@@ -86,7 +86,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         		message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
                         Constants.ERROR_CODE_600+Constants._ERROR_MESSAGE);
                     responseString =
-                        Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
+                        Utils.frameResponse(Constants.ERROR_CODE_600,
                             Constants.RESPONSE_FAILURE, message, "");
                     LOGGER.fatal("Status is inactive for the customer with unique id ::"+customer.getUniqueId());
         	}

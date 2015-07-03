@@ -8,6 +8,6 @@ public interface CommonDao {
   
   public Customer fetchCustomerByEmailId(String emailId);
   
-  public boolean setCustomerSessionId(String sessionId, String uniqueId);
+  public boolean setCustomerSessionId(String sessionId, int customerId);
 
 }

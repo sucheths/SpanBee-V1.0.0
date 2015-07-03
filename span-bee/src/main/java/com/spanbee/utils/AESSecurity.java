@@ -48,7 +48,7 @@ public class AESSecurity {
   public static void main(String[] args) {
     try{
     System.out.println(encrypt("sucheth"));
-    System.out.println(decrypt("4FMCQOjlYICmgYklsA5v6g=="));
+    System.out.println(decrypt("rPK0NrVvTcVRO/Iq8Dd2lw=="));
     }catch(Exception e){
       e.printStackTrace();
     }

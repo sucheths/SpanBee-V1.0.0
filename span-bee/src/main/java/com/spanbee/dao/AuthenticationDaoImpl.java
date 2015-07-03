@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.apache.log4j.Logger;
 
 import com.spanbee.entities.Customer;
+import com.spanbee.utils.AESSecurity;
 
 
 public class AuthenticationDaoImpl implements AuthenticationDao {
@@ -33,16 +34,14 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
   
   @Transactional
   @Override
-  public boolean setCustomerSessionId(String sessionId, String uniqueId) {
+  public boolean setCustomerSessionId(String sessionId, int customerId) {
 
     if (LOGGER.isInfoEnabled()) {
-      LOGGER.info("Entered into setCustomerSessionId method for customer with id::" + uniqueId);
+      LOGGER.info("Entered into setCustomerSessionId method for customer with id::" + customerId);
     }
     boolean sessionFlag= false;
     try {
-      if (uniqueId != null) {
-        sessionFlag = commonDao.setCustomerSessionId(sessionId,uniqueId);
-      }
+        sessionFlag = commonDao.setCustomerSessionId(sessionId,customerId);
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
     }

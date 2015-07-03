@@ -22,8 +22,8 @@ public interface CustomerRepository extends JpaRepository<Customer, String>{
   public Customer getCustomerInfoByEmailAddress(String emailId);
   
   @Modifying
-  @Query("update Customer customer set customer.sessionId = ?1 where customer.uniqueId = ?2")
-  int setCustomerSessionId(String sessionId, String uniqueId);
+  @Query("update Customer customer set customer.sessionId = ?1 where customer.id = ?2")
+  int setCustomerSessionId(String sessionId, int customerId);
 
 
 }

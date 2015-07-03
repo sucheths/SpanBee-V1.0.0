@@ -69,26 +69,11 @@ public class RegistrationServiceImpl implements RegistrationService {
           message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
                   Constants.REGISTRATION_SUCCESS_MESSAGE);
           message =
-                  message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",customer.getEmailAddress());
+                  message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",AESSecurity.decrypt(customer.getEmailAddress()));
           responseString =
                   Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
                       Constants.RESPONSE_SUCCESS, message, "");
-          EmailModel emailModel = new EmailModel();
-          emailModel.setSubject(PropertyReader.resourceBundlesManager
-              .getValueFromResourceBundle("en","EMAIL_SUBJECT"));
-          emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
-          emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_HOSTNAME"));
-          emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
-          emailModel.setPort(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PORT"));
-          emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
-          String emailTemplate = getEmailTemplate(customer);
-          emailModel.setContent(emailTemplate);
-          emailModel.setToaddess(AESSecurity.decrypt(customer.getEmailAddress()));
-          emailModel.setUserName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_USERNAME"));
-          SendRegistrationEmailThread registrationThreadEmail =
-              new SendRegistrationEmailThread(emailModel);
-          Thread emailThread = new Thread(registrationThreadEmail);
-          emailThread.start();
+          sendEmail(customer);
         }
         }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_ACTIVE){
         	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
@@ -98,12 +83,12 @@ public class RegistrationServiceImpl implements RegistrationService {
                         Constants.RESPONSE_FAILURE, message, "");
                 LOGGER.fatal("Trying to register with already existing email id ");
         }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_INACTIVE){
-        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                    Constants.ERROR_CODE_701+Constants._ERROR_MESSAGE);
-                responseString =
-                    Utils.frameResponse(Constants.ERROR_CODE_701,
+          
+        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,Constants.ERROR_CODE_701+Constants._ERROR_MESSAGE);
+                responseString =Utils.frameResponse(Constants.ERROR_CODE_701,
                         Constants.RESPONSE_FAILURE, message, "");
                 LOGGER.fatal("Customer has registered already but did not verify still");
+                sendEmail(customer);
         }
       }
     } catch (Exception e) {
@@ -115,6 +100,29 @@ public class RegistrationServiceImpl implements RegistrationService {
         LOGGER.error("Exception occurred ::", e);
      }
     return responseString;
+  }
+
+  /**
+   * @param customer
+   * @throws Exception
+   */
+  private void sendEmail(Customer customer) throws Exception {
+    EmailModel emailModel = new EmailModel();
+    emailModel.setSubject(PropertyReader.resourceBundlesManager
+        .getValueFromResourceBundle("en","EMAIL_SUBJECT"));
+    emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
+    emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_HOSTNAME"));
+    emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
+    emailModel.setPort(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PORT"));
+    emailModel.setProtocol(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PROTOCOL"));
+    String emailTemplate = getEmailTemplate(customer);
+    emailModel.setContent(emailTemplate);
+    emailModel.setToaddess(AESSecurity.decrypt(customer.getEmailAddress()));
+    emailModel.setUserName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_USERNAME"));
+    SendRegistrationEmailThread registrationThreadEmail =
+        new SendRegistrationEmailThread(emailModel);
+    Thread emailThread = new Thread(registrationThreadEmail);
+    emailThread.start();
   }
 
   /**

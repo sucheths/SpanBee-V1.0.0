@@ -58,15 +58,15 @@ public class CommonDaoImpl implements CommonDao{
 
   @Transactional
   @Override
-  public boolean setCustomerSessionId(String sessionId, String uniqueId) {
+  public boolean setCustomerSessionId(String sessionId, int customerId) {
     boolean sessionFlag = false;
     int updationStatus=0;
     try {
-      if (sessionId != null && uniqueId != null) {
+      if (sessionId != null) {
         if (LOGGER.isInfoEnabled()) {
-          LOGGER.info("Inside setCustomerSessionId method for customer with uniqueI ::" + uniqueId);
+          LOGGER.info("Inside setCustomerSessionId method for customer with uniqueI ::" + customerId);
         }
-        updationStatus = customerRepository.setCustomerSessionId(sessionId, uniqueId);
+        updationStatus = customerRepository.setCustomerSessionId(sessionId, customerId);
         if(updationStatus != 0){
           sessionFlag=true;
         }
