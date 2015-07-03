@@ -67,7 +67,7 @@
 	</bean> 
 	
 	<bean id="passwordService" class="com.spanbee.service.PasswordServiceImpl">
-	     	<property name="emailValidationDao" ref="emailValidationDao" />
+	     	<property name="commonDao" ref="commonDao" />
 	</bean>
 	
 	<bean id="dataSource"
