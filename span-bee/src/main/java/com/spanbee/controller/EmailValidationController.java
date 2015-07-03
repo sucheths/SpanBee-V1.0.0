@@ -44,7 +44,7 @@ public class EmailValidationController {
     
     if(uid!=null){
       emailValidationService.validateEmail(uid);
-    }
+    } 
     
     String response=null;
     try {
