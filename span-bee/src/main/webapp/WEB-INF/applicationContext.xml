@@ -25,11 +25,12 @@
 	
 	<bean id="authenticationService"	class="com.spanbee.service.AuthenticationServiceImpl">
 		<property name="authenticationDao" ref="authenticationDao" />
+		<property name="registrationDao" ref="registrationDao" />
 	</bean>
 	
 	<bean id="authenticationDao" class="com.spanbee.dao.AuthenticationDaoImpl">
 	<property name="commonDao" ref="commonDao" />
-	</bean>
+	</bean> 
 	
 	<bean id="commonDao" class="com.spanbee.dao.CommonDaoImpl">
 	</bean>

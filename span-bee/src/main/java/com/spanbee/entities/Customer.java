@@ -60,8 +60,23 @@ public class Customer implements Serializable {
 	//bi-directional many-to-one association to CustomerAddress
 	@OneToMany(mappedBy="customer")
 	private List<CustomerAddress> customerAddresses;
+	
+	@Column(name="updated_at")
+	private String profile_image;
 
-	public Customer() {
+	
+	@Column(name="registration_type")
+    private byte registration_type;
+
+  public byte getRegistration_type() {
+    return registration_type;
+  }
+
+  public void setRegistration_type(byte registration_type) {
+    this.registration_type = registration_type;
+  }
+ 
+  public Customer() {
 	}
 
 	public int getId() {
@@ -183,6 +198,14 @@ public class Customer implements Serializable {
 	public void setCustomerAddresses(List<CustomerAddress> customerAddresses) {
 		this.customerAddresses = customerAddresses;
 	}
+	
+	public String getProfile_image() {
+	    return profile_image;
+	  }
+
+	  public void setProfile_image(String profile_image) {
+	    this.profile_image = profile_image;
+	  }
 
 	public CustomerAddress addCustomerAddress(CustomerAddress customerAddress) {
 		getCustomerAddresses().add(customerAddress);

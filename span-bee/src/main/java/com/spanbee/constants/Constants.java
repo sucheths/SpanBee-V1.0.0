@@ -44,6 +44,9 @@ public class Constants {
   
    public static final String ERROR_CODE_500= "500";
   
+  public static final String GF_PASSWORD="gf";
+    
+  
   public static final String ERROR_CODE_501= "501";
   
   public static final String ERROR_CODE_510= "510";
@@ -52,14 +55,24 @@ public class Constants {
   
   public static final String ERROR_CODE_521= "521";
   
-  
+   
   
   public static final String _ERROR_MESSAGE= "_ERROR_MESSAGE";
   
   public static final String FORGOTPASSWORD_SUCCESS_MESSAGE = "FORGOTPASSWORD_SUCCESS_MESSAGE";
   
-  public static final String ERROR_CODE_502= "502";
+  public static final String ERROR_CODE_502 = "502";
   
-  public static final String ERROR_CODE_503= "503";
+  public static final String ERROR_CODE_503 = "503";
+  
+  public static final byte NORMAL_LOGIN = 0;
+  
+  public static final byte GOOGLE_LOGIN = 1;
+  
+  public static final byte FACEBOOK_LOGIN = 2;
+  
+  public static final String ERROR_CODE_504 = "504";
+  
+  public static final String ERROR_CODE_505 = "505";
  
 }

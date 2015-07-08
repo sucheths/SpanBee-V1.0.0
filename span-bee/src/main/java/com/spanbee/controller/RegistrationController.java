@@ -60,7 +60,7 @@ public class RegistrationController {
               + " :: session_id : " + session_id + " :: dataList : " + dataNode);
           JsonNode registerNode = dataNode.get("register");
           LOGGER.error("registerationParameters::" + registerNode.toString());
-          registerationParameters = parseGetcodeRequest(registerNode.toString());
+          registerationParameters = parseRegisterRequest(registerNode.toString());
           LOGGER.info("registrationService:::" + registrationService);
           if (registrationService != null && registerationParameters != null) {
             responseString = registrationService.register(registerationParameters, request);
@@ -101,15 +101,14 @@ public class RegistrationController {
     return responseString;
   }
 
-  private RegisterationParameters parseGetcodeRequest(String registerParameters) {
+  private RegisterationParameters parseRegisterRequest(String registerParameters) {
     RegisterationParameters parameters = null;
     LOGGER.debug("Parsing RegisterationRequest request for string : " + registerParameters);
     try {
       ObjectMapper registerationMapper = new ObjectMapper();
       registerationMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
       registerationMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
-      registerationMapper
-          .configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      registerationMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
       parameters = registerationMapper.readValue(registerParameters, RegisterationParameters.class);
     } catch (Exception e) {
       LOGGER.error("Error occured while parsing registeration Request Object : ", e);
