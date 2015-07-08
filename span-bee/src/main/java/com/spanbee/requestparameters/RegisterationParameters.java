@@ -17,6 +17,20 @@ public class RegisterationParameters{
   private String gender;
   private String mobile;
   private String marital_status;
+  private String image;
+  private String registration_type;
+  public String getRegistration_type() {
+    return registration_type;
+  }
+  public void setRegistration_type(String registration_type) {
+    this.registration_type = registration_type;
+  }
+  public String getImage() {
+    return image;
+  }
+  public void setImage(String image) {
+    this.image = image;
+  }
   public String getFirst_name() {
     return first_name;
   }

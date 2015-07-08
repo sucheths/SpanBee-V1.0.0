@@ -44,6 +44,9 @@ public class Constants {
   
   public static final String ERROR_CODE_500= "500";
   
+  public static final String GF_PASSWORD="gf";
+  
+  
   public static final String ERROR_CODE_501= "501";
   
   public static final String ERROR_CODE_600= "600";
