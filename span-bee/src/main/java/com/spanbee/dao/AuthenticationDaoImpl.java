@@ -30,7 +30,7 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
       LOGGER.error("Exception occurred :", e);
     }
     return customer;
-  }
+  } 
   
   @Transactional
   @Override

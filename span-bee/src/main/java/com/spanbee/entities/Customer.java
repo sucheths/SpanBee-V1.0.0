@@ -75,7 +75,7 @@ public class Customer implements Serializable {
   public void setRegistration_type(byte registration_type) {
     this.registration_type = registration_type;
   }
-
+ 
   public Customer() {
 	}
 
