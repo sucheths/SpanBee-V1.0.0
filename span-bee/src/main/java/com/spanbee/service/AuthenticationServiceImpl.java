@@ -219,10 +219,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         sessionId =
             new KeyGenerator().generateSessionID(AESSecurity.decrypt(customer.getEmailAddress()));
         customer.setSessionId(sessionId);
-        customer.setRegistration_type(Byte.valueOf(tpauthenticationParameters
+        customer.setRegistrationType(Byte.valueOf(tpauthenticationParameters
             .getRegistration_type()));
         customer.setPassword(AESSecurity.encrypt("gf"));
-        customer.setProfile_image(tpauthenticationParameters.getImage());
+       // customer.setProfile_image(tpauthenticationParameters.getImage());
         customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
         customer.setUpdatedAt(new Date());
         customer = registrationDao.register(customer);

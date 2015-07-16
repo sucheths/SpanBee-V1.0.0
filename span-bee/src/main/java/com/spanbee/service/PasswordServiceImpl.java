@@ -39,7 +39,7 @@ public class PasswordServiceImpl implements PasswordService {
         //Fetch the customer details for specified EmailId
         Customer customer = commonDao.fetchCustomerByEmailId(AESSecurity.encrypt(emailId));
         
-        if(customer != null && customer.getRegistration_type() == Constants.NORMAL_LOGIN){
+        if(customer != null && customer.getRegistrationType() == Constants.NORMAL_LOGIN){
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
                   Constants.FORGOTPASSWORD_SUCCESS_MESSAGE);
           message =
@@ -49,7 +49,7 @@ public class PasswordServiceImpl implements PasswordService {
           response.setStatus(Constants.RESPONSE_SUCCESS);
           sendEmail(customer);
         }
-        else if(customer != null && customer.getRegistration_type() == Constants.GOOGLE_LOGIN) {
+        else if(customer != null && customer.getRegistrationType() == Constants.GOOGLE_LOGIN) {
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
               Constants.ERROR_CODE_504 + Constants._ERROR_MESSAGE);
          
@@ -58,7 +58,7 @@ public class PasswordServiceImpl implements PasswordService {
           response.setStatus(Constants.RESPONSE_FAILURE);
           LOGGER.fatal("Trying to send password mail to already existing customer");
         }
-        else if(customer != null && customer.getRegistration_type() == Constants.FACEBOOK_LOGIN) {
+        else if(customer != null && customer.getRegistrationType() == Constants.FACEBOOK_LOGIN) {
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
               Constants.ERROR_CODE_505 + Constants._ERROR_MESSAGE);
           

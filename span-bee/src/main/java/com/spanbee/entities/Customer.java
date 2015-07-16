@@ -3,7 +3,6 @@ package com.spanbee.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -17,6 +16,7 @@ public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	@Column(name="birth_date")
@@ -47,6 +47,9 @@ public class Customer implements Serializable {
 
 	private String password;
 
+	@Column(name="registration_type")
+	private byte registrationType;
+
 	@Column(name="session_id")
 	private String sessionId;
 
@@ -57,26 +60,15 @@ public class Customer implements Serializable {
 	@Column(name="updated_at")
 	private Date updatedAt;
 
-	//bi-directional many-to-one association to CustomerAddress
-	@OneToMany(mappedBy="customer")
-	private List<CustomerAddress> customerAddresses;
-	
-	@Column(name="updated_at")
-	private String profile_image;
+	//bi-directional one-to-one association to CustomerPersonnelInfo
+	@OneToOne(mappedBy="customer")
+	private CustomerPersonnelInfo customerPersonnelInfo;
 
-	
-	@Column(name="registration_type")
-    private byte registration_type;
+	//bi-directional one-to-one association to CustomerProfessionalInfo
+	@OneToOne(mappedBy="customer")
+	private CustomerProfessionalInfo customerProfessionalInfo;
 
-  public byte getRegistration_type() {
-    return registration_type;
-  }
-
-  public void setRegistration_type(byte registration_type) {
-    this.registration_type = registration_type;
-  }
- 
-  public Customer() {
+	public Customer() {
 	}
 
 	public int getId() {
@@ -167,6 +159,14 @@ public class Customer implements Serializable {
 		this.password = password;
 	}
 
+	public byte getRegistrationType() {
+		return this.registrationType;
+	}
+
+	public void setRegistrationType(byte registrationType) {
+		this.registrationType = registrationType;
+	}
+
 	public String getSessionId() {
 		return this.sessionId;
 	}
@@ -191,34 +191,20 @@ public class Customer implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<CustomerAddress> getCustomerAddresses() {
-		return this.customerAddresses;
+	public CustomerPersonnelInfo getCustomerPersonnelInfo() {
+		return this.customerPersonnelInfo;
 	}
 
-	public void setCustomerAddresses(List<CustomerAddress> customerAddresses) {
-		this.customerAddresses = customerAddresses;
-	}
-	
-	public String getProfile_image() {
-	    return profile_image;
-	  }
-
-	  public void setProfile_image(String profile_image) {
-	    this.profile_image = profile_image;
-	  }
-
-	public CustomerAddress addCustomerAddress(CustomerAddress customerAddress) {
-		getCustomerAddresses().add(customerAddress);
-		customerAddress.setCustomer(this);
-
-		return customerAddress;
+	public void setCustomerPersonnelInfo(CustomerPersonnelInfo customerPersonnelInfo) {
+		this.customerPersonnelInfo = customerPersonnelInfo;
 	}
 
-	public CustomerAddress removeCustomerAddress(CustomerAddress customerAddress) {
-		getCustomerAddresses().remove(customerAddress);
-		customerAddress.setCustomer(null);
+	public CustomerProfessionalInfo getCustomerProfessionalInfo() {
+		return this.customerProfessionalInfo;
+	}
 
-		return customerAddress;
+	public void setCustomerProfessionalInfo(CustomerProfessionalInfo customerProfessionalInfo) {
+		this.customerProfessionalInfo = customerProfessionalInfo;
 	}
 
 }
