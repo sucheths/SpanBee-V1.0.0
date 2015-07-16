@@ -30,12 +30,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
   private RegistrationDao registrationDao;
   private AuthenticationDao authenticationDao;
-  
+
 
   private static final Logger LOGGER = Logger.getLogger(RegistrationServiceImpl.class);
 
   @Override
-  public String register(RegisterationParameters registrationParams, Request request) throws Exception {
+  public String register(RegisterationParameters registrationParams, Request request)
+      throws Exception {
 
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("**********@Inside register Method Of Service Layer**********");
@@ -44,61 +45,78 @@ public class RegistrationServiceImpl implements RegistrationService {
     // (RegistrationDaoImpl) SpringApplicationContext.getBean("registrationDaoImpl");
     Customer customer = null;
     String responseString = null;
-    String message=null;
+    String message = null;
+    Response response = null;
 
     try {
+      response = new Response();
       if (registrationParams != null && request != null) {
-        //Check if customer is already registered
-        customer=authenticationDao.fetchCustomerInfoByEmailId(AESSecurity.encrypt(registrationParams.getEmail_id()));
-        if(customer == null){
-        customer = new Customer();
-        customer.setBirthDate(Utils.getDateFormat(registrationParams.getBirth_date()));
-        customer.setCustomerStatus((byte) EnumValues.CustomerStatus.Active.ordinal());
-        customer.setEmailAddress(AESSecurity.encrypt(registrationParams.getEmail_id()));
-        customer.setFirstName(registrationParams.getFirst_name());
-        customer.setGender(registrationParams.getGender());
-        customer.setLastName(registrationParams.getLast_name());
-        customer.setMaritalStatus(Byte.valueOf(registrationParams.getMarital_status()));
-        customer.setMobile(registrationParams.getMobile());
-        customer.setPassword(AESSecurity.encrypt(registrationParams.getPassword()));
-        customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
-        customer.setCreatedAt(new Date());
-        customer.setUpdatedAt(new Date());
-        customer = registrationDao.register(customer);
-        if (customer != null) {
-          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                  Constants.REGISTRATION_SUCCESS_MESSAGE);
+        // Check if customer is already registered
+        customer =
+            authenticationDao.fetchCustomerInfoByEmailId(AESSecurity.encrypt(registrationParams
+                .getEmail_id()));
+        if (customer == null) {
+          customer = new Customer();
+          customer.setBirthDate(Utils.getDateFormat(registrationParams.getBirth_date()));
+          customer.setCustomerStatus((byte) EnumValues.CustomerStatus.Active.ordinal());
+          customer.setEmailAddress(AESSecurity.encrypt(registrationParams.getEmail_id()));
+          customer.setFirstName(registrationParams.getFirst_name());
+          customer.setGender(registrationParams.getGender());
+          customer.setLastName(registrationParams.getLast_name());
+          customer.setMaritalStatus(Byte.valueOf(registrationParams.getMarital_status()));
+          customer.setMobile(registrationParams.getMobile());
+          customer.setPassword(AESSecurity.encrypt(registrationParams.getPassword()));
+          customer.setUniqueId(KeyGenerator.getUniqueTransactionId());
+          customer.setCreatedAt(new Date());
+          customer.setUpdatedAt(new Date());
+          customer = registrationDao.register(customer);
+          if (customer != null) {
+            message =
+                PropertyReader.resourceBundlesManager.getValueFromResourceBundle(
+                    Constants.LANGUAGE, Constants.REGISTRATION_SUCCESS_MESSAGE);
+            message =
+                message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",
+                    AESSecurity.decrypt(customer.getEmailAddress()));
+          
+            response.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
+            response.setMessage(message);
+            response.setStatus(Constants.RESPONSE_SUCCESS);
+            sendEmail(customer);
+          }
+        } else if (customer != null & customer.getCustomerStatus() == Constants.STATUS_ACTIVE) {
           message =
-                  message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",AESSecurity.decrypt(customer.getEmailAddress()));
-          responseString =
-                  Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
-                      Constants.RESPONSE_SUCCESS, message, "");
+              PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.ERROR_CODE_520 + Constants._ERROR_MESSAGE);
+
+          response.setCode(Constants.ERROR_CODE_520);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
+          LOGGER.fatal("Trying to register with already existing email id ");
+        } else if (customer != null & customer.getCustomerStatus() == Constants.STATUS_INACTIVE) {
+
+          message =
+              PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.ERROR_CODE_521 + Constants._ERROR_MESSAGE);
+
+          response.setCode(Constants.ERROR_CODE_521);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
+          LOGGER.fatal("Customer has registered already but did not verify still");
           sendEmail(customer);
         }
-        }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_ACTIVE){
-        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                    Constants.ERROR_CODE_520+Constants._ERROR_MESSAGE);
-                responseString =
-                    Utils.frameResponse(Constants.ERROR_CODE_520,
-                        Constants.RESPONSE_FAILURE, message, "");
-                LOGGER.fatal("Trying to register with already existing email id ");
-        }else if(customer != null & customer.getCustomerStatus() == Constants.STATUS_INACTIVE){
-          
-        	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,Constants.ERROR_CODE_521+Constants._ERROR_MESSAGE);
-                responseString =Utils.frameResponse(Constants.ERROR_CODE_521,
-                        Constants.RESPONSE_FAILURE, message, "");
-                LOGGER.fatal("Customer has registered already but did not verify still");
-                sendEmail(customer);
-        }
       }
+      responseString = Utils.frameResponse(response);
     } catch (Exception e) {
-    	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                Constants.RESPONSE_FAILURE,message, "");
-        LOGGER.error("Exception occurred ::", e);
-     }
+      message =
+          PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+
+      response.setCode(Constants.ERROR_CODE_500);
+      response.setMessage(message);
+      response.setStatus(Constants.RESPONSE_FAILURE);
+      responseString = Utils.frameResponse(response);
+      LOGGER.error("Exception occurred ::", e);
+    }
     return responseString;
   }
 
@@ -108,8 +126,8 @@ public class RegistrationServiceImpl implements RegistrationService {
    */
   private void sendEmail(Customer customer) throws Exception {
     EmailModel emailModel = new EmailModel();
-    emailModel.setSubject(PropertyReader.resourceBundlesManager
-        .getValueFromResourceBundle("en","EMAIL_SUBJECT"));
+    emailModel.setSubject(PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en",
+        "EMAIL_SUBJECT"));
     emailModel.setFromAddress(PropertyReader.iniUtils.get("EMAIL", "EMAIL_FROMADDESS"));
     emailModel.setHostName(PropertyReader.iniUtils.get("EMAIL", "EMAIL_HOSTNAME"));
     emailModel.setPassword(PropertyReader.iniUtils.get("EMAIL", "EMAIL_PASSWORD"));
@@ -130,9 +148,9 @@ public class RegistrationServiceImpl implements RegistrationService {
    * @throws Exception
    */
   private String getEmailTemplate(Customer customer) throws Exception {
-    String emailTemplate =PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
-    emailTemplate =
-        emailTemplate.replace("$EMAIL_USER_NAME",customer.getFirstName());
+    String emailTemplate =
+        PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TEMPLATE");
+    emailTemplate = emailTemplate.replace("$EMAIL_USER_NAME", customer.getFirstName());
     emailTemplate =
         emailTemplate.replace("$EMAIL_TITLE",
             PropertyReader.resourceBundlesManager.getValueFromResourceBundle("en", "EMAIL_TITLE"));
@@ -169,8 +187,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     this.authenticationDao = authenticationDao;
   }
 
-  
-  
 
 
 }

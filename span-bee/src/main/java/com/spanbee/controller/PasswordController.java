@@ -11,147 +11,167 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.spanbee.constants.Constants;
 import com.spanbee.requestparameters.Request;
+import com.spanbee.responseparameters.Response;
 import com.spanbee.service.PasswordService;
 import com.spanbee.utils.PropertyReader;
 import com.spanbee.utils.Utils;
 
 /**
  * @author sbandi
- *
+ * 
  */
 
 
 @Path("login")
 public class PasswordController {
-  
+
   @Autowired
   private PasswordService passwordService;
   private static final Logger LOGGER = Logger.getLogger(PasswordController.class);
-  
+
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/forgotPassword")
-  public String forgotPassword(String jsonReqest) throws Exception{
+  public String forgotPassword(String jsonReqest) throws Exception {
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register authenticate with request string :" + jsonReqest);
     }
-    
+
     String version = null;
     String session_id = null;
     String responseString = null;
     String message = null;
-    
+    Response response = null;
+
     try {
-      if (jsonReqest != null) {
-        Request request = Utils.parseJsonRequest(jsonReqest);
-        if (request != null) {
-          version = request.getVersion();
-          session_id = request.getSession_id(); 
-          JsonNode dataNode = request.getData();
-          
-          if(LOGGER.isDebugEnabled()) {
-            LOGGER.debug("register Request::: " + " :: version from request: " + version
-                + " :: session_id : " + session_id + " :: dataList : " + dataNode);
-          }
-              
-          JsonNode forgotPasswordNode = dataNode.get("forgotPassword");
-          LOGGER.error("forgotPasswordParameters::" + forgotPasswordNode.toString());
-          
-          if (passwordService != null ) {
-            String emailId = forgotPasswordNode.get("email_id").getTextValue();
-            
-            responseString = passwordService.forgotPassword(emailId);
-          } else {
-            message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
-            responseString =
-                Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                    Constants.RESPONSE_FAILURE,message, "");
-            LOGGER.error("Request obtained after parsing JSON request is null");
-          }
-          
-        } else {
-          message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-              Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                  Constants.RESPONSE_FAILURE,message, "");
-          LOGGER.error("Request obtained after parsing JSON request is null");
-        }
-      } else {
-        message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-            Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                Constants.RESPONSE_FAILURE,message, "");
-        LOGGER.warn("Request obtained is null");
-      }
-    } catch (Exception e) {
-      message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-          Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
-      responseString =
-          Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-              Constants.RESPONSE_FAILURE,message, "");
-      LOGGER.error("Exception occurred ::", e);
-    }
-    return responseString;
-  }
-  
-  @POST
-  @Produces(MediaType.APPLICATION_JSON)
-  @Path("/resetPassword")
-  public String resetPassword(String jsonReqest) throws Exception{
-    if (LOGGER.isInfoEnabled()) {
-      LOGGER.info("Entered into register authenticate with request string :" + jsonReqest);
-    }
-    
-    String version = null;
-    String session_id = null;
-    String responseString = null;
-    String message = null;
-    
-    try {
+      response= new Response();
       if (jsonReqest != null) {
         Request request = Utils.parseJsonRequest(jsonReqest);
         if (request != null) {
           version = request.getVersion();
           session_id = request.getSession_id();
           JsonNode dataNode = request.getData();
-          
-          if(LOGGER.isDebugEnabled()) {
+
+          if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("register Request::: " + " :: version from request: " + version
                 + " :: session_id : " + session_id + " :: dataList : " + dataNode);
           }
-              
+
           JsonNode forgotPasswordNode = dataNode.get("forgotPassword");
           LOGGER.error("forgotPasswordParameters::" + forgotPasswordNode.toString());
-          
-          if (passwordService != null ) {
+
+          if (passwordService != null) {
             String emailId = forgotPasswordNode.get("email_id").getTextValue();
+
+            responseString = passwordService.forgotPassword(emailId);
+          } else {
+            message =
+                PropertyReader.resourceBundlesManager.getValueFromResourceBundle(
+                    Constants.LANGUAGE, Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+            response.setCode(Constants.ERROR_CODE_500);
+            response.setMessage(message);
+            response.setStatus(Constants.RESPONSE_FAILURE);
+            responseString = Utils.frameResponse(response);
+
+            LOGGER.error("Request obtained after parsing JSON request is null");
           }
-          
+
         } else {
-          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-              Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                  Constants.RESPONSE_FAILURE,message, "");
+          message =
+              PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+          response.setCode(Constants.ERROR_CODE_500);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
+          responseString = Utils.frameResponse(response);
           LOGGER.error("Request obtained after parsing JSON request is null");
         }
       } else {
-        message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                Constants.RESPONSE_FAILURE,message, "");
+        message =
+            PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+        response.setCode(Constants.ERROR_CODE_500);
+        response.setMessage(message);
+        response.setStatus(Constants.RESPONSE_FAILURE);
+        responseString = Utils.frameResponse(response);
         LOGGER.warn("Request obtained is null");
       }
     } catch (Exception e) {
-      message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-          Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-      responseString =
-          Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-              Constants.RESPONSE_FAILURE,message, "");
+      message =
+          PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+      response.setCode(Constants.ERROR_CODE_500);
+      response.setMessage(message);
+      response.setStatus(Constants.RESPONSE_FAILURE);
+      responseString = Utils.frameResponse(response);
+      LOGGER.error("Exception occurred ::", e);
+    }
+    return responseString;
+  }
+
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/resetPassword")
+  public String resetPassword(String jsonReqest) throws Exception {
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("Entered into register authenticate with request string :" + jsonReqest);
+    }
+
+    String version = null;
+    String session_id = null;
+    String responseString = null;
+    String message = null;
+    Response response=null;
+
+    try {
+      response=new Response();
+      if (jsonReqest != null) {
+        Request request = Utils.parseJsonRequest(jsonReqest);
+        if (request != null) {
+          version = request.getVersion();
+          session_id = request.getSession_id();
+          JsonNode dataNode = request.getData();
+
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("register Request::: " + " :: version from request: " + version
+                + " :: session_id : " + session_id + " :: dataList : " + dataNode);
+          }
+
+          JsonNode forgotPasswordNode = dataNode.get("forgotPassword");
+          LOGGER.error("forgotPasswordParameters::" + forgotPasswordNode.toString());
+
+          if (passwordService != null) {
+            String emailId = forgotPasswordNode.get("email_id").getTextValue();
+          }
+
+        } else {
+          message =
+              PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+          response.setCode(Constants.ERROR_CODE_500);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
+          responseString = Utils.frameResponse(response);
+          LOGGER.error("Request obtained after parsing JSON request is null");
+        }
+      } else {
+        message =
+            PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+        response.setCode(Constants.ERROR_CODE_500);
+        response.setMessage(message);
+        response.setStatus(Constants.RESPONSE_FAILURE);
+        responseString = Utils.frameResponse(response);
+        LOGGER.warn("Request obtained is null");
+      }
+    } catch (Exception e) {
+      message =
+          PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+      response.setCode(Constants.ERROR_CODE_500);
+      response.setMessage(message);
+      response.setStatus(Constants.RESPONSE_FAILURE);
+      responseString = Utils.frameResponse(response);
       LOGGER.error("Exception occurred ::", e);
     }
     return responseString;
@@ -161,4 +181,3 @@ public class PasswordController {
     this.passwordService = passwordService;
   }
 }
-

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.spanbee.constants.Constants;
 import com.spanbee.requestparameters.RegisterationParameters;
 import com.spanbee.requestparameters.Request;
+import com.spanbee.responseparameters.Response;
 import com.spanbee.service.RegistrationService;
 import com.spanbee.utils.PropertyReader;
 import com.spanbee.utils.Utils;
@@ -25,10 +26,10 @@ import com.spanbee.utils.Utils;
  * @author sucheth.s
  * 
  */
-@Path("registration") 
+@Path("registration")
 public class RegistrationController {
 
- 
+
   @Autowired
   private RegistrationService registrationService;
   private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
@@ -44,11 +45,13 @@ public class RegistrationController {
     JsonNode data = null;
     String responseString = null;
     RegisterationParameters registerationParameters = null;
-    String message=null;
+    String message = null;
+    Response response = null;
     if (LOGGER.isInfoEnabled()) {
       LOGGER.info("Entered into register method with request string :" + jsonReqest);
     }
     try {
+      response = new Response();
       if (jsonReqest != null) {
         Request request = Utils.parseJsonRequest(jsonReqest);
         if (request != null) {
@@ -64,38 +67,46 @@ public class RegistrationController {
           LOGGER.info("registrationService:::" + registrationService);
           if (registrationService != null && registerationParameters != null) {
             responseString = registrationService.register(registerationParameters, request);
-          }else{
-            message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-                Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-            responseString =
-                Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                    Constants.RESPONSE_FAILURE,message, "");
+          } else {
+            message =
+                PropertyReader.resourceBundlesManager.getValueFromResourceBundle(
+                    Constants.LANGUAGE, Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+            response.setCode(Constants.ERROR_CODE_500);
+            response.setMessage(message);
+            response.setStatus(Constants.RESPONSE_FAILURE);
+            responseString = Utils.frameResponse(response);
             LOGGER.error("request object after parsing the jsonReqest is null");
           }
         } else {
-          message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-              Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                  Constants.RESPONSE_FAILURE,message, "");
+          message =
+              PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                  Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+          response.setCode(Constants.ERROR_CODE_500);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
+          responseString = Utils.frameResponse(response);
           LOGGER.error("request object after parsing the jsonReqest is null");
         }
       } else {
-        message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-            Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                Constants.RESPONSE_FAILURE,message, "");
+        message =
+            PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+                Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+        response.setCode(Constants.ERROR_CODE_500);
+        response.setMessage(message);
+        response.setStatus(Constants.RESPONSE_FAILURE);
+        responseString = Utils.frameResponse(response);
         LOGGER.warn("JSON Request obtained is null");
       }
-      LOGGER.fatal("Sending response to the customer ::"+responseString);
+      LOGGER.fatal("Sending response to the customer ::" + responseString);
 
     } catch (Exception e) {
-      message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
-          Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-      responseString =
-          Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-              Constants.RESPONSE_FAILURE,message, "");
+      message =
+          PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
+              Constants.ERROR_CODE_500 + Constants._ERROR_MESSAGE);
+      response.setCode(Constants.ERROR_CODE_500);
+      response.setMessage(message);
+      response.setStatus(Constants.RESPONSE_FAILURE);
+      responseString = Utils.frameResponse(response);
       LOGGER.error("Exception occurred ::", e);
     }
     return responseString;
@@ -108,7 +119,8 @@ public class RegistrationController {
       ObjectMapper registerationMapper = new ObjectMapper();
       registerationMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
       registerationMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
-      registerationMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      registerationMapper
+          .configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
       parameters = registerationMapper.readValue(registerParameters, RegisterationParameters.class);
     } catch (Exception e) {
       LOGGER.error("Error occured while parsing registeration Request Object : ", e);

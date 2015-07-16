@@ -7,6 +7,7 @@ import com.spanbee.constants.Constants;
 import com.spanbee.dao.CommonDao;
 import com.spanbee.entities.Customer;
 import com.spanbee.model.EmailModel;
+import com.spanbee.responseparameters.Response;
 import com.spanbee.service.email.SendRegistrationEmailThread;
 import com.spanbee.utils.AESSecurity;
 import com.spanbee.utils.PropertyReader;
@@ -28,11 +29,12 @@ public class PasswordServiceImpl implements PasswordService {
       LOGGER.info("**********Inside forgotPassword Method Of Service Layer**********");
       LOGGER.info("Email ID : " + emailId);
     }
-
+   Response response=null;
     String responseString = null;
     String message = null;
 
     try {
+      response= new Response();
       if (emailId != null && !emailId.isEmpty()) {
         //Fetch the customer details for specified EmailId
         Customer customer = commonDao.fetchCustomerByEmailId(AESSecurity.encrypt(emailId));
@@ -42,50 +44,54 @@ public class PasswordServiceImpl implements PasswordService {
                   Constants.FORGOTPASSWORD_SUCCESS_MESSAGE);
           message =
                   message.replace("$FIRST_NAME", customer.getFirstName()).replace("$EMAIL",AESSecurity.decrypt(customer.getEmailAddress()));
-          responseString =
-                  Utils.frameResponse(Constants.HTTP_STATUS_CODE_SUCCESS,
-                      Constants.RESPONSE_SUCCESS, message, "");
+          response.setCode(Constants.HTTP_STATUS_CODE_SUCCESS);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_SUCCESS);
           sendEmail(customer);
         }
         else if(customer != null && customer.getRegistration_type() == Constants.GOOGLE_LOGIN) {
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
               Constants.ERROR_CODE_504 + Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.ERROR_CODE_504,
-                  Constants.RESPONSE_FAILURE, message, "");
+         
+          response.setCode(Constants.ERROR_CODE_504);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
           LOGGER.fatal("Trying to send password mail to already existing customer");
         }
         else if(customer != null && customer.getRegistration_type() == Constants.FACEBOOK_LOGIN) {
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
               Constants.ERROR_CODE_505 + Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.ERROR_CODE_505,
-                  Constants.RESPONSE_FAILURE, message, "");
+          
+          response.setCode(Constants.ERROR_CODE_505);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
           LOGGER.fatal("Trying to send password mail to already existing customer");
         }
         else {
           message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
               Constants.ERROR_CODE_502 + Constants._ERROR_MESSAGE);
-          responseString =
-              Utils.frameResponse(Constants.ERROR_CODE_502,
-                  Constants.RESPONSE_FAILURE, message, "");
+          response.setCode(Constants.ERROR_CODE_502);
+          response.setMessage(message);
+          response.setStatus(Constants.RESPONSE_FAILURE);
           LOGGER.fatal("Trying to send password mail to already existing customer");
         }
       } 
       else {
         message = PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
             Constants.ERROR_CODE_503 + Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.ERROR_CODE_503,
-                Constants.RESPONSE_FAILURE, message, "");
+        response.setCode(Constants.ERROR_CODE_503);
+        response.setMessage(message);
+        response.setStatus(Constants.RESPONSE_FAILURE);
         LOGGER.fatal("Trying to send password mail to already existing customer");
       }
+      responseString = Utils.frameResponse(response);
     } catch (Exception e) {
     	message =PropertyReader.resourceBundlesManager.getValueFromResourceBundle(Constants.LANGUAGE,
             Constants.ERROR_CODE_500+Constants._ERROR_MESSAGE);
-        responseString =
-            Utils.frameResponse(Constants.HTTP_STATUS_CODE_FAILURE,
-                Constants.RESPONSE_FAILURE,message, "");
+        response.setCode(Constants.ERROR_CODE_500);
+        response.setMessage(message);
+        response.setStatus(Constants.RESPONSE_FAILURE);
+        responseString = Utils.frameResponse(response);
         LOGGER.error("Exception occurred ::", e);
      }
     return responseString;

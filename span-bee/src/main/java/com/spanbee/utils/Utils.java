@@ -69,22 +69,17 @@ public class Utils {
     return strWriter1.toString();
   }
 
-  public static String frameResponse(String code, String status, String message, String description) {
-    Response response = null;
+  public static String frameResponse(Response response) {
     String responseMsg = null;
     try {
-      response = new Response();
-      response.setCode(code);
-      response.setDescription(description);
-      response.setMessage(message);
-      response.setStatus(status);
-      responseMsg = getResponseString(response);
+     if(response != null){
+         responseMsg = getResponseString(response);
+     }
     } catch (Exception e) {
       LOGGER.error("Exception occurred :", e);
     }
     return responseMsg;
   }
-  
   
  
 
